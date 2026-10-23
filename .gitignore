@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Next.js
+web/.next/
+web/out/
+web/build/
+web/.turbo/
+web/next-env.d.ts
+
+# Local file uploads (UPLOAD_DIR)
+uploads/
+
+# Docker / DB data (named volumes live outside repo, but just in case)
+pgdata/
+postgres-data/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Build artifacts
+dist/
+build/
+coverage/
+
+# TypeScript
+*.tsbuildinfo

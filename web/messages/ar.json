@@ -1,0 +1,39 @@
+{
+  "common": {
+    "appName": "PEKİYİ Mobilya",
+    "comingSoon": "قريبًا",
+    "comingSoonDescription": "هذا القسم غير جاهز بعد. ترقّب قريبًا.",
+    "loading": "جارٍ التحميل..."
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "customers": "العملاء",
+    "products": "المنتجات",
+    "orders": "الطلبات",
+    "proformas": "الفواتير المبدئية",
+    "production": "الإنتاج",
+    "loading": "مراقبة التحميل",
+    "labels": "الملصقات",
+    "settings": "الإعدادات"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "subtitle": "سجّل الدخول إلى حسابك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "submitting": "جارٍ تسجيل الدخول...",
+    "errorInvalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+    "errorGeneric": "تعذّر تسجيل الدخول. يرجى المحاولة مرة أخرى."
+  },
+  "topbar": {
+    "language": "اللغة",
+    "account": "الحساب",
+    "logout": "تسجيل الخروج"
+  },
+  "languages": {
+    "tr": "Türkçe",
+    "ar": "العربية",
+    "en": "English"
+  }
+}

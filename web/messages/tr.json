@@ -1,0 +1,39 @@
+{
+  "common": {
+    "appName": "PEKİYİ Mobilya",
+    "comingSoon": "Yakında",
+    "comingSoonDescription": "Bu bölüm henüz hazır değil. Yakında burada olacak.",
+    "loading": "Yükleniyor..."
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "customers": "Müşteriler",
+    "products": "Ürünler",
+    "orders": "Siparişler",
+    "proformas": "Proformalar",
+    "production": "Üretim",
+    "loading": "Yükleme Kontrol",
+    "labels": "Etiketler",
+    "settings": "Ayarlar"
+  },
+  "login": {
+    "title": "Giriş Yap",
+    "subtitle": "Hesabınıza giriş yapın",
+    "email": "E-posta",
+    "password": "Şifre",
+    "submit": "Giriş Yap",
+    "submitting": "Giriş yapılıyor...",
+    "errorInvalidCredentials": "E-posta veya şifre hatalı.",
+    "errorGeneric": "Giriş yapılamadı. Lütfen tekrar deneyin."
+  },
+  "topbar": {
+    "language": "Dil",
+    "account": "Hesap",
+    "logout": "Çıkış Yap"
+  },
+  "languages": {
+    "tr": "Türkçe",
+    "ar": "العربية",
+    "en": "English"
+  }
+}
