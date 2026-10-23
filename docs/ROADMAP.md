@@ -5,9 +5,19 @@
 - [~] **Phase 1 — Data model + users management + audit log** *(in progress)*
   - [x] **1.1** — roles & permissions (Better Auth access control, `web/lib/auth/permissions.ts`),
     users management, my profile, `audit_log` table + `logAudit` helper, audit log page.
-  - [ ] **1.2** — Drizzle schema for the business modules (customers, products, orders, …),
-    relations, committed migrations.
-- [ ] **Phase 2 — Customers & catalog** — customers and product catalog CRUD UIs.
+  - [ ] **1.2** — business data model (company settings, bank accounts, exchange rates, catalog,
+    fabrics, customers, orders, payments, document issues, label templates), insert-only seed +
+    dev fixtures (`SEED_FIXTURES=true`), pure domain functions in `web/lib/domain/`
+    (composition, price suggestion, totals, piece/label counts, order numbers, EAN-13),
+    price-free production queries. See [DOMAIN.md](DOMAIN.md).
+- [ ] **Phase 2 — Customers & catalog** — CRUD UIs for:
+  - customers (incl. label branding, default label template, customer product codes/barcodes);
+  - admin: **company settings** (incl. order number pattern, revision suffix and **order code**),
+    **bank accounts**, **exchange rates** (daily manual entry);
+  - admin: **catalog** — models, piece prices (incl. CBM, package count/contents), presets,
+    fabrics.
+  - These pages are where users fix the source-data problems listed in DOMAIN.md; the seed never
+    overwrites their edits.
 - [ ] **Phase 3 — Orders** — editable grid, custom columns, realtime updates, history/audit trail.
 - [ ] **Phase 4 — Proforma** — numbering, versions, PDF/Excel export in all 3 languages.
 - [ ] **Phase 5 — Pilot deployment** — deploy to a VPS for real use by the export team.

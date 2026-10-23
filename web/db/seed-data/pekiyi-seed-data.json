@@ -1,0 +1,2162 @@
+{
+  "_readme": "Seed + test fixtures extracted from PEKİYİ's real Excel files on 2026-10-23. catalog/company/fabrics -> db:seed. sampleOrders + customers -> dev-only fixtures (db:seed with SEED_FIXTURES=true) and test cases: generated documents must reproduce the 'expected' numbers.",
+  "company": {
+    "brandName": "PEKİYİ",
+    "legalName": "DİRENÇ MOBİLYA İMALAT SANAYİ VE TİCARET LTD. ŞTİ.",
+    "address": "OSB, 20 cad. No:32, Melikgazi / Kayseri / Turkey",
+    "email": "export@pekiyifurniture.com",
+    "phone": "+90 531 212 65 67",
+    "website": "https://pekiyimobilya.com.tr/",
+    "hsCode": "940141000000",
+    "orderNumber": {
+      "pattern": "{YY}{MM}{DD}-{SEQ}ZOC",
+      "revisionSuffix": "-REV{N}",
+      "note": "SEQ = running number of that day starting at 1. Meaning of 'ZOC' to be confirmed by the user; keep the suffix configurable."
+    }
+  },
+  "bank": {
+    "bankName": "KUVEYTTURK",
+    "swift": "KTEFTRIS",
+    "branch": "Kayseri Organize Sanayi Subesi - 281",
+    "beneficiary": "DİRENÇ MOBİLYA İMALAT SANAYİ VE TİCARET LTD. ŞTİ.",
+    "accounts": [
+      {
+        "currency": "USD",
+        "iban": "TR420020500009383693300102"
+      },
+      {
+        "currency": "EUR",
+        "iban": "TR690020500009383693300101",
+        "note": "Several old Excel files wrongly print the USD IBAN in the EURO row. TR69...0101 is the one used in the JIAN and NETHERLANDS proformas — CONFIRM WITH ACCOUNTING before go-live."
+      }
+    ]
+  },
+  "exchangeRate": {
+    "date": "2026-10-23",
+    "USD_TRY": 49,
+    "EUR_TRY": 55.8,
+    "note": "Rates as typed in PRICE_OFFER_TEMPLATE; entered manually by users."
+  },
+  "pieceTypes": [
+    {
+      "code": "SEAT_3",
+      "seats": 3,
+      "name": {
+        "tr": "3'lü Koltuk",
+        "en": "3-Seater",
+        "ar": "كنبة ثلاثية"
+      },
+      "short": {
+        "tr": "3'lü",
+        "en": "3-seater",
+        "ar": "ثلاثية"
+      }
+    },
+    {
+      "code": "SEAT_2",
+      "seats": 2,
+      "name": {
+        "tr": "2'li Koltuk",
+        "en": "2-Seater",
+        "ar": "كنبة ثنائية"
+      },
+      "short": {
+        "tr": "2'li",
+        "en": "2-seater",
+        "ar": "ثنائية"
+      }
+    },
+    {
+      "code": "SEAT_1",
+      "seats": 1,
+      "name": {
+        "tr": "1'li Koltuk / Berjer",
+        "en": "Armchair",
+        "ar": "كرسي مفرد"
+      },
+      "short": {
+        "tr": "1'li",
+        "en": "armchair",
+        "ar": "مفرد"
+      }
+    },
+    {
+      "code": "CUSHION_EXTRA",
+      "seats": 0,
+      "isAccessory": true,
+      "name": {
+        "tr": "Ekstra Yastık",
+        "en": "Extra Cushion",
+        "ar": "مخدة إضافية"
+      },
+      "short": {
+        "tr": "yastık",
+        "en": "cushion",
+        "ar": "مخدة"
+      }
+    }
+  ],
+  "models": [
+    {
+      "code": "DAMLA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 14850,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "ECE",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 6800,
+          "currency": "TRY"
+        }
+      },
+      "presets": []
+    },
+    {
+      "code": "EFSUN",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "ELVAN",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "GOLD",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "KOTON",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": 610,
+          "currency": "USD"
+        }
+      ]
+    },
+    {
+      "code": "LAHZA",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "LİDYA",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": 597,
+          "currency": "USD"
+        }
+      ]
+    },
+    {
+      "code": "MAVI",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "MODA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 11550,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "MİRANDA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 11550,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "NESVE",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "NEVA",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "NOTTE",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 11550,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "NİSAN",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 7950,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 4850,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "PERİ",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "PORTO",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 9300,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "REVA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 9300,
+          "currency": "TRY"
+        }
+      },
+      "presets": []
+    },
+    {
+      "code": "REYHAN",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 8400,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 4850,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "RİVA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 9300,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "SADE",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "SENA",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": 555,
+          "currency": "USD"
+        }
+      ]
+    },
+    {
+      "code": "SEREN",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [],
+      "unitCbm": {
+        "SEAT_3": 0.8
+      }
+    },
+    {
+      "code": "VERA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 13100,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 5800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "VİLLA",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": 625,
+          "currency": "USD"
+        }
+      ]
+    },
+    {
+      "code": "VİSAL",
+      "isSofabed": true,
+      "piecePrices": {},
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "YALIN",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 6800,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "ZERDA",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 7750,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 4850,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "İKLİM",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 8400,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 4850,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    },
+    {
+      "code": "İPEK",
+      "isSofabed": true,
+      "piecePrices": {
+        "SEAT_3": {
+          "price": 7950,
+          "currency": "TRY"
+        },
+        "SEAT_1": {
+          "price": 4850,
+          "currency": "TRY"
+        }
+      },
+      "presets": [
+        {
+          "composition": "3+3+1+1",
+          "fixedPrice": null,
+          "currency": "TRY"
+        }
+      ]
+    }
+  ],
+  "fabrics": [
+    {
+      "brand": "BOYTEKS",
+      "code": "30147202",
+      "colorKey": "ANTRASİT",
+      "color": {
+        "tr": "Antrasit",
+        "en": "Anthracite",
+        "ar": "فحمي"
+      }
+    },
+    {
+      "brand": "BOYTEKS",
+      "code": "30147203",
+      "colorKey": "A.GRİ",
+      "color": {
+        "tr": "Açık Gri",
+        "en": "Light Grey",
+        "ar": "رمادي فاتح"
+      }
+    },
+    {
+      "brand": "BOYTEKS",
+      "code": "30147204",
+      "colorKey": "KAPUÇİNO",
+      "color": {
+        "tr": "Kapuçino",
+        "en": "Cappuccino",
+        "ar": "كابتشينو"
+      }
+    },
+    {
+      "brand": "BOYTEKS",
+      "code": "30147205",
+      "colorKey": "KAHVE",
+      "color": {
+        "tr": "Kahve",
+        "en": "Brown",
+        "ar": "بني"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-01",
+      "colorKey": "KREM",
+      "color": {
+        "tr": "Krem",
+        "en": "Cream",
+        "ar": "كريمي"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-02",
+      "colorKey": "STUCCO",
+      "color": {
+        "tr": "Stucco",
+        "en": "Stucco",
+        "ar": "ستوكو"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-03",
+      "colorKey": "KAHVE",
+      "color": {
+        "tr": "Kahve",
+        "en": "Brown",
+        "ar": "بني"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-04",
+      "colorKey": "BORDO",
+      "color": {
+        "tr": "Bordo",
+        "en": "Burgundy",
+        "ar": "خمري"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-05",
+      "colorKey": "K.TURKUAZ",
+      "color": {
+        "tr": "Koyu Turkuaz",
+        "en": "Dark Turquoise",
+        "ar": "فيروزي غامق"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-06",
+      "colorKey": "A.GRİ",
+      "color": {
+        "tr": "Açık Gri",
+        "en": "Light Grey",
+        "ar": "رمادي فاتح"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-07",
+      "colorKey": "ANTRASİT",
+      "color": {
+        "tr": "Antrasit",
+        "en": "Anthracite",
+        "ar": "فحمي"
+      }
+    },
+    {
+      "brand": "SETRA",
+      "code": "D-08",
+      "colorKey": "GRİ",
+      "color": {
+        "tr": "Gri",
+        "en": "Grey",
+        "ar": "رمادي"
+      }
+    },
+    {
+      "brand": "EMK",
+      "code": "663 V04",
+      "colorKey": null,
+      "color": null
+    },
+    {
+      "brand": "EMK",
+      "code": "663 V07",
+      "colorKey": null,
+      "color": null
+    },
+    {
+      "brand": "EMK",
+      "code": "663 V08",
+      "colorKey": null,
+      "color": null
+    },
+    {
+      "brand": "EMK",
+      "code": "663 V12",
+      "colorKey": null,
+      "color": null
+    },
+    {
+      "brand": "APOLLO",
+      "code": "21",
+      "colorKey": null,
+      "color": null
+    },
+    {
+      "brand": "APOLLO",
+      "code": "23",
+      "colorKey": null,
+      "color": null
+    },
+    {
+      "brand": "OGUZCAN",
+      "code": "F2-03",
+      "colorKey": null,
+      "color": null
+    }
+  ],
+  "customers": [
+    {
+      "key": "jian",
+      "company": "JIAN SMART ROIM",
+      "country": "IQ",
+      "city": null,
+      "phone": "+964 771 370 8155",
+      "docLanguage": "ar",
+      "currency": "USD"
+    },
+    {
+      "key": "virona",
+      "company": "VİRONA FURNITURE",
+      "country": "SE",
+      "phone": null,
+      "docLanguage": "en",
+      "currency": "USD"
+    },
+    {
+      "key": "grand",
+      "company": "GRAND DIZAJN",
+      "contactPerson": "Mr. VLATKO",
+      "country": "ME",
+      "city": "Podgorica",
+      "phone": "+382 67 64 64 62",
+      "docLanguage": "en",
+      "currency": "USD",
+      "secondaryCurrency": "EUR"
+    },
+    {
+      "key": "hala",
+      "company": "HALA FURNITURE",
+      "country": "NL",
+      "city": "Rijswijk",
+      "address": "VERRIJN STUARTLAAN 42B, 2288 EM RIJSWIJK, NETHERLANDS",
+      "taxIds": {
+        "BTW": "NL 00373278B51",
+        "KVK": "82812258"
+      },
+      "email": "halawonen@gmail.com",
+      "phone": "+31 633999931",
+      "docLanguage": "en",
+      "currency": "USD"
+    },
+    {
+      "key": "hari",
+      "company": "HARI",
+      "country": "MK",
+      "phone": "+38971422106",
+      "docLanguage": "en",
+      "currency": "USD"
+    },
+    {
+      "key": "alsham",
+      "company": "AL-SHAM FURNITURE",
+      "country": "PS",
+      "city": "Hebron",
+      "phone": "+972 59-829-9727",
+      "docLanguage": "ar",
+      "currency": "USD"
+    },
+    {
+      "key": "eirfan",
+      "company": "EIRFAN",
+      "country": "GB",
+      "phone": "+44 7775 966022",
+      "docLanguage": "en",
+      "currency": "USD"
+    }
+  ],
+  "sampleOrders": [
+    {
+      "customer": "hala",
+      "number": "261012-1ZOC",
+      "revision": 0,
+      "date": "2026-10-12",
+      "incoterm": "EXW",
+      "currency": "USD",
+      "deliveryTime": "2-3 WEEKS",
+      "paymentTerms": "30% DOWN PAYMENT / 70% AT DELIVERY",
+      "advance": null,
+      "items": [
+        {
+          "model": "DAMLA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147202"
+          ],
+          "qty": 28,
+          "unit": "SET",
+          "unitPrice": 650
+        },
+        {
+          "model": "VERA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147205"
+          ],
+          "qty": 28,
+          "unit": "SET",
+          "unitPrice": 625
+        },
+        {
+          "model": "RİVA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147203"
+          ],
+          "qty": 28,
+          "unit": "SET",
+          "unitPrice": 550
+        }
+      ],
+      "productionNotes": {
+        "tr": "DAMLA MODELİNİN ÜÇLÜLERİNİN KOLLARINDA DEKOR OLMAYACAK."
+      },
+      "expected": {
+        "total": 51100,
+        "pieces": 336
+      },
+      "sourceIssues": [
+        "Invoice date typed as 2026-12-10 although number says 12 Oct (day/month swap)",
+        "Production Excel header still shows GRAND DIZAJN / Mr.VLATKO and a Montenegro phone (copied from another file)"
+      ]
+    },
+    {
+      "customer": "jian",
+      "number": "261010-1ZOC",
+      "revision": 0,
+      "date": "2026-10-10",
+      "incoterm": "EXW",
+      "currency": "USD",
+      "deliveryTime": "2-3 WEEKS",
+      "paymentTerms": "30% DOWN PAYMENT / 70% AT DELIVERY",
+      "advance": {
+        "amount": 500
+      },
+      "documentOptions": {
+        "showPiecePrices": true
+      },
+      "items": [
+        {
+          "model": "DAMLA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 235.2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 92.4
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147204 KAPUÇİNO"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 840
+        },
+        {
+          "model": "DAMLA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 235.2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 92.4
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147205 KAHVE"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 840
+        },
+        {
+          "model": "DAMLA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 235.2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 92.4
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147203 A.GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 840
+        },
+        {
+          "model": "DAMLA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 235.2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 92.4
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147202 ANTRASİT"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 840
+        },
+        {
+          "model": "VERA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 209
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147204 KAPUÇİNO"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 790
+        },
+        {
+          "model": "VERA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 209
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147205 KAHVE"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 790
+        },
+        {
+          "model": "VERA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 209
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147203 A.GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 790
+        },
+        {
+          "model": "VERA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 209
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147202 ANTRASİT"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 790
+        },
+        {
+          "model": "MODA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 184
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "EMK 663 V04"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 740
+        },
+        {
+          "model": "MODA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 184
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "EMK 663 V07"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 740
+        },
+        {
+          "model": "MODA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 184
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "EMK 663 V08"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 740
+        },
+        {
+          "model": "MODA",
+          "composition": "3+3+1+1+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2,
+              "unitPrice": 184
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 4,
+              "unitPrice": 93
+            }
+          ],
+          "fabrics": [
+            "EMK 663 V12"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 740
+        }
+      ],
+      "customerNotes": {
+        "ar": "موديل MODA:\nسيتم استخدام قماش EMK 663 V04 لجميع تفاصيل الفتيل في الموديل.\n\nموديل VERA:\nسيتم عمل ديكور جديد لمساند الأيدي في هذا الموديل.\n\nباقي الموديلات:\n- الكنب الثلاثية: سيتم تجهيز 4 مخدات ديكورية لكل كنبة ثلاثية، بنفس طريقة الموديل الموجود في المعرض. ستكون مخدتان بلون المنتج نفسه، ومخدتان من قماش مطرّز بلون متناسق مع المنتج.\n- الكراسي الأحادية: سيتم تجهيز مخدة ديكورية واحدة لكل كرسي أحادي، من القماش المطرّز، وبحجم يعادل نصف حجم المخدة العادية.\n\nملاحظات عامة:\n- لن يتم طباعة اسم PEKİYİ على الإتيكيتات.\n- سيتم تثبيت إتيكيت معدني يحمل شعاركم أسفل كل كنبة، وسنقوم نحن بتصنيع الإتيكيتات بعد استلام ملف الشعار منكم."
+      },
+      "labelRequirements": "No PEKİYİ name on labels; a metal label with the customer's logo under each sofa (customer sends logo).",
+      "expected": {
+        "total": 9480,
+        "balance": 8980
+      }
+    },
+    {
+      "customer": "virona",
+      "number": "261020ZOC-REV1",
+      "baseNumber": "261020ZOC",
+      "revision": 1,
+      "date": "2026-10-22",
+      "incoterm": "EXW",
+      "currency": "USD",
+      "deliveryTime": "3-5 WEEKS",
+      "paymentTerms": "30% ADVANCE / 70% BEFORE LOADING",
+      "advance": {
+        "amount": 1000
+      },
+      "items": [
+        {
+          "model": "İKLİM",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-01 KREM"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "İKLİM",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-02 STUCCO"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "İKLİM",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-03 KAHVE"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "İKLİM",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-06 A.GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "İKLİM",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-08 GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "İKLİM",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-07 ANTRASİT"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "LAHZA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-01 KREM"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "LAHZA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-02 STUCCO"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "LAHZA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-03 KAHVE"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "LAHZA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-06 A.GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "LAHZA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-08 GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "LAHZA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-07 ANTRASİT"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD PIPING ON ARM UPHOLSTERY\n2. GOLD LEGS\n3. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. فتيل ذهبي على تنجيد الإيدين\n2. أرجل ذهبية نفس موديل الـ GOLD\n3. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. KOLLARIN KALIBININ ARASINDAKİ FİTİL ALTIN DERİ OLACAK\n2. AYAKLAR GOLD MODELİNİN AYAKLARI İLE AYNI OLACAK\n3. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "GOLD",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-01 KREM"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD LEGS (AS PER CATALOGUE)\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. أرجل ذهبية من نفس الموديل\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR GOLD, MODELİN KENDİ AYAKLARI OLACAK\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "GOLD",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-02 STUCCO"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD LEGS (AS PER CATALOGUE)\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. أرجل ذهبية من نفس الموديل\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR GOLD, MODELİN KENDİ AYAKLARI OLACAK\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "GOLD",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-03 KAHVE"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD LEGS (AS PER CATALOGUE)\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. أرجل ذهبية من نفس الموديل\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR GOLD, MODELİN KENDİ AYAKLARI OLACAK\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "GOLD",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-06 A.GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD LEGS (AS PER CATALOGUE)\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. أرجل ذهبية من نفس الموديل\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR GOLD, MODELİN KENDİ AYAKLARI OLACAK\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "GOLD",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-08 GRİ"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD LEGS (AS PER CATALOGUE)\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. أرجل ذهبية من نفس الموديل\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR GOLD, MODELİN KENDİ AYAKLARI OLACAK\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "GOLD",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-07 ANTRASİT"
+          ],
+          "qty": 1,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. GOLD LEGS (AS PER CATALOGUE)\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. أرجل ذهبية من نفس الموديل\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR GOLD, MODELİN KENDİ AYAKLARI OLACAK\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "REYHAN",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-01 KREM"
+          ],
+          "qty": 2,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. LEGS IN SAME COLOR AS THE WOODEN ARM TRIM\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. الأرجل بنفس لون الإطار الخشبي للإيدين\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR AYNI MODELDEN\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "REYHAN",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-02 STUCCO"
+          ],
+          "qty": 2,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. LEGS IN SAME COLOR AS THE WOODEN ARM TRIM\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. الأرجل بنفس لون الإطار الخشبي للإيدين\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR AYNI MODELDEN\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "REYHAN",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-03 KAHVE"
+          ],
+          "qty": 2,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. LEGS IN SAME COLOR AS THE WOODEN ARM TRIM\n2. NEVA MODEL CUSHIONS WITH GOLD PIPING",
+              "ar": "1. الأرجل بنفس لون الإطار الخشبي للإيدين\n2. مخدات موديل NEVA بفتيل ذهبي"
+            },
+            "production": {
+              "tr": "1. AYAKLAR AYNI MODELDEN\n2. YASTIKLAR NEVA MODELİ OLACAK"
+            }
+          }
+        },
+        {
+          "model": "NEVA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-01 KREM"
+          ],
+          "qty": 2,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. LEGS IN SAME COLOR AS THE WOODEN ARM TRIM\n2. ARMS SEPARATE FROM THE BASE (LIKE OTHER MODELS), SAME ARM SHAPE AS NEVA CATALOGUE\n3. BASE MODIFIED TO MATCH OTHER MODELS",
+              "ar": "1. الأرجل بنفس لون الإطار الخشبي للإيدين\n2. الإيدين منفصلة وبنفس شكل إيدين كتالوج NEVA بس أطول، وما بتتركب من فوق، بتنربط من الجنب\n3. القاسة نفس قاسة موديل REYHAN، وبتتركب بالإيدين"
+            },
+            "production": {
+              "tr": "1. AYAKLAR AYNI MODELDEN\n2. KOLLAR AYRI OLACAK, NEVA KATALOĞUNDAKİ KOL ŞEKLİNDE AMA DAHA UZUN. KOLLAR ÜSTTEN ÇAKMA DEĞİL, YANDAN BAĞLI\n3. KASA, REYHAN MODELİNİN KASASI GİBİ OLACAK VE KOLLARA YANDAN ÇAKILACAK. KOLLAR SÖKÜLDÜĞÜNDE KASANIN İÇİNE SIĞMALI"
+            }
+          }
+        },
+        {
+          "model": "NEVA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-02 STUCCO"
+          ],
+          "qty": 2,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. LEGS IN SAME COLOR AS THE WOODEN ARM TRIM\n2. ARMS SEPARATE FROM THE BASE (LIKE OTHER MODELS), SAME ARM SHAPE AS NEVA CATALOGUE\n3. BASE MODIFIED TO MATCH OTHER MODELS",
+              "ar": "1. الأرجل بنفس لون الإطار الخشبي للإيدين\n2. الإيدين منفصلة وبنفس شكل إيدين كتالوج NEVA بس أطول، وما بتتركب من فوق، بتنربط من الجنب\n3. القاسة نفس قاسة موديل REYHAN، وبتتركب بالإيدين"
+            },
+            "production": {
+              "tr": "1. AYAKLAR AYNI MODELDEN\n2. KOLLAR AYRI OLACAK, NEVA KATALOĞUNDAKİ KOL ŞEKLİNDE AMA DAHA UZUN. KOLLAR ÜSTTEN ÇAKMA DEĞİL, YANDAN BAĞLI\n3. KASA, REYHAN MODELİNİN KASASI GİBİ OLACAK VE KOLLARA YANDAN ÇAKILACAK. KOLLAR SÖKÜLDÜĞÜNDE KASANIN İÇİNE SIĞMALI"
+            }
+          }
+        },
+        {
+          "model": "NEVA",
+          "composition": "3+3+1+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 2
+            },
+            {
+              "pieceType": "CUSHION_EXTRA",
+              "qtyPerUnit": 2,
+              "unitPrice": 0
+            }
+          ],
+          "fabrics": [
+            "SETRA D-03 KAHVE"
+          ],
+          "qty": 2,
+          "unit": "SET",
+          "unitPrice": 400,
+          "notes": {
+            "customer": {
+              "en": "1. LEGS IN SAME COLOR AS THE WOODEN ARM TRIM\n2. ARMS SEPARATE FROM THE BASE (LIKE OTHER MODELS), SAME ARM SHAPE AS NEVA CATALOGUE\n3. BASE MODIFIED TO MATCH OTHER MODELS",
+              "ar": "1. الأرجل بنفس لون الإطار الخشبي للإيدين\n2. الإيدين منفصلة وبنفس شكل إيدين كتالوج NEVA بس أطول، وما بتتركب من فوق، بتنربط من الجنب\n3. القاسة نفس قاسة موديل REYHAN، وبتتركب بالإيدين"
+            },
+            "production": {
+              "tr": "1. AYAKLAR AYNI MODELDEN\n2. KOLLAR AYRI OLACAK, NEVA KATALOĞUNDAKİ KOL ŞEKLİNDE AMA DAHA UZUN. KOLLAR ÜSTTEN ÇAKMA DEĞİL, YANDAN BAĞLI\n3. KASA, REYHAN MODELİNİN KASASI GİBİ OLACAK VE KOLLARA YANDAN ÇAKILACAK. KOLLAR SÖKÜLDÜĞÜNDE KASANIN İÇİNE SIĞMALI"
+            }
+          }
+        }
+      ],
+      "customerNotes": {
+        "en": "Springs must be firm, not soft – full spring seat with thick, dense inner filling.",
+        "ar": "جميع المنتجات بالراصور، ويكون الراصور متوسط القساوة (لا طري كتير ولا قاسي كتير)، وبين الراصور يكون في طاقوس، مع حشوة داخلية سميكة وكثيفة."
+      },
+      "productionNotes": {
+        "tr": "1- TÜM ÜRÜNLER YAYLI OLACAK. YAYLARIN İÇİNDE TAKOZ OLACAK. SIRT VE OTURAK KISIMLARINA EK TAKOZ OLACAK, SERT OLMASI LAZIM.\n2- HER 3'LÜ KOLTUK İÇİN 1 ADET EKSTRA YASTIK YAPILACAK."
+      },
+      "referenceNotes": [
+        {
+          "title": {
+            "tr": "GOLD MODELİNİN AYAKLARI",
+            "en": "Gold model legs",
+            "ar": "أرجل ذهبية نفس موديل الـ GOLD"
+          },
+          "photo": true
+        },
+        {
+          "title": {
+            "tr": "NEVA MODELİ YASTIKLAR",
+            "en": "NEVA model cushions with gold piping",
+            "ar": "مخدات موديل NEVA بفتيل ذهبي"
+          },
+          "photo": true
+        }
+      ],
+      "sampleApprovalRequired": {
+        "tr": "ÜRETİME BAŞLANDIĞINDA İLK OLARAK 1 ADET 3'LÜ KOLTUK HAZIRLANACAKTIR. MÜŞTERİMİZ GELİP KOLTUĞU İNCELEYECEK, ÜZERİNE OTURARAK DENEYECEK VE ONAYINI VERECEKTİR. ONAYIN ARDINDAN TÜM SİPARİŞİN ÜRETİMİNE DEVAM EDİLECEKTİR."
+      },
+      "expected": {
+        "total": 12000,
+        "advance": 1000,
+        "balance": 11000,
+        "sets": 30,
+        "seat3": 60,
+        "seat1": 60,
+        "extraCushions": 60
+      }
+    },
+    {
+      "customer": "grand",
+      "number": "261022ZOC-REV11",
+      "baseNumber": "261022ZOC",
+      "revision": 11,
+      "date": "2026-10-22",
+      "incoterm": "EXW",
+      "currency": "USD",
+      "secondaryCurrency": {
+        "currency": "EUR",
+        "usdPerEur": 1.12
+      },
+      "deliveryTime": "3-5 WEEKS",
+      "advance": {
+        "percent": 30
+      },
+      "documentOptions": {
+        "showCbm": true,
+        "showSecondaryCurrency": true
+      },
+      "items": [
+        {
+          "model": "SEREN",
+          "composition": "3",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 1
+            }
+          ],
+          "fabrics": [
+            "APOLLO 23",
+            "APOLLO 21"
+          ],
+          "qty": 10,
+          "unit": "PCS",
+          "unitPrice": 126,
+          "unitCbm": 0.8
+        },
+        {
+          "model": "ZERDA",
+          "composition": "3+2+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 1
+            },
+            {
+              "pieceType": "SEAT_2",
+              "qtyPerUnit": 1
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 1
+            }
+          ],
+          "fabrics": [
+            "OGUZCAN F2-03"
+          ],
+          "qty": 7,
+          "unit": "SET",
+          "unitPrice": 333,
+          "unitCbm": 1.8
+        },
+        {
+          "model": "VERA",
+          "composition": "3+2+1",
+          "pieces": [
+            {
+              "pieceType": "SEAT_3",
+              "qtyPerUnit": 1
+            },
+            {
+              "pieceType": "SEAT_2",
+              "qtyPerUnit": 1
+            },
+            {
+              "pieceType": "SEAT_1",
+              "qtyPerUnit": 1,
+              "modelOverride": "DAMLA"
+            }
+          ],
+          "fabrics": [
+            "BOYTEKS 30147203"
+          ],
+          "qty": 5,
+          "unit": "SET",
+          "unitPrice": 470.4,
+          "unitCbm": 2.6,
+          "notes": {
+            "production": {
+              "tr": "VERA BERJER MODELİ DAMLA BERJER OLACAKTIR."
+            }
+          }
+        }
+      ],
+      "expected": {
+        "total": 5943,
+        "totalEur": 5306.25,
+        "cbm": 33.6,
+        "seat3": 22,
+        "seat2": 12,
+        "seat1": 12,
+        "pieces": 46
+      },
+      "sourceIssues": [
+        "Down Payment formula is =#REF!*0.3 (broken)",
+        "Production Excel keeps old prices/CBM in hidden columns F-L (e.g. SEREN 303 / 2.35 CBM) that disagree with the proforma (126 / 0.8)",
+        "EURO IBAN row shows the USD IBAN"
+      ]
+    }
+  ],
+  "catalogWarnings": [
+    "Duplicate catalog row 'ZERDA 3-SEATER SOFA BED': prices 7750 and 6800. Kept the first (7750) — confirm with Ömer Bey."
+  ]
+}

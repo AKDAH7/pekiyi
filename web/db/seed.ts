@@ -114,6 +114,37 @@ async function main() {
     });
   }
 
+  // Business reference data + optional fixtures. Insert-only: rows that
+  // already exist (edited in the app or not) are never overwritten.
+  const { loadSeedData } = await import("./seed/data");
+  const { seedReferenceData } = await import("./seed/reference");
+  const { seedFixtures } = await import("./seed/fixtures");
+
+  const data = loadSeedData();
+  const printReport = (title: string, report: Record<string, number>) => {
+    const entries = Object.entries(report).filter(([, inserted]) => inserted > 0);
+    console.log(
+      entries.length === 0
+        ? `${title}: everything already present — nothing inserted.`
+        : `${title}: inserted ${entries.map(([table, n]) => `${table}=${n}`).join(", ")}`,
+    );
+  };
+
+  printReport("Reference data", await seedReferenceData(db, data));
+
+  if (process.env.SEED_FIXTURES === "true") {
+    printReport("Fixtures", await seedFixtures(db, data));
+  }
+
+  console.log("\nSource-data warnings (fix these in the app; the seed never overwrites):");
+  for (const warning of data.catalogWarnings) console.log(`  [catalog] ${warning}`);
+  for (const account of data.bank.accounts) {
+    if (account.note) console.log(`  [bank ${account.currency}] ${account.note}`);
+  }
+  for (const order of data.sampleOrders) {
+    for (const issue of order.sourceIssues ?? []) console.log(`  [order ${order.number}] ${issue}`);
+  }
+
   await queryClient.end();
 }
 

@@ -84,6 +84,11 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
   only checks whether that cookie is *present* (fast, no DB hit); the real session check against
   the database happens in the protected layout (`web/app/[locale]/(app)/layout.tsx`) and in every
   server action/route handler via `requireUser()`/`requireRole()`.
+- **Seeds are insert-only** (`ON CONFLICT DO NOTHING` by natural key). Never make a seed update
+  existing rows — users edit seeded values in the app.
+- **Production never receives price data.** Anything the production role can reach reads
+  through `web/lib/orders/production-queries.ts` (explicit column lists, tested SQL).
+- **Money/rate/CBM math uses `web/lib/domain/decimal.ts`** (decimal.js), never JS numbers.
 - Each step of work ends with a git commit.
 
 ## Safety
@@ -108,16 +113,21 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
 │   │   ├── schema/           Drizzle schema, one file per domain; index.ts re-exports
 │   │   ├── migrations/       generated migrations, committed to git
 │   │   ├── index.ts          server-only Drizzle client
-│   │   └── seed.ts           creates the first admin user (idempotent)
+│   │   ├── seed.ts           first admin user + reference data (+ fixtures), insert-only
+│   │   ├── seed/             seed modules (JSON loader, reference data, fixtures, label templates)
+│   │   ├── seed-data/        pekiyi-seed-data.json, extracted from the real Excel files
+│   │   └── seed-check.ts     proves re-seeding never overwrites app edits
 │   ├── drizzle.config.ts
 │   ├── i18n/                 next-intl routing/navigation/request config
 │   ├── lib/auth/             Better Auth config, session/role helpers (requireUser, requireRole)
+│   ├── lib/domain/           pure business functions (totals, pricing, numbering…), no DB
+│   ├── lib/orders/           order data access; production-queries.ts is the price-free path
 │   ├── actions/              server actions (login/logout, future mutations)
 │   ├── components/           shared UI; components/ui/ is shadcn-generated
 │   ├── messages/             tr.json, ar.json, en.json
 │   ├── scripts/              check-logical-classes.mjs (RTL class lint, run by `pnpm lint`)
 │   └── proxy.ts              locale negotiation + fast session-cookie presence check
-├── docs/ROADMAP.md
+├── docs/ROADMAP.md, docs/DOMAIN.md
 └── README.md
 ```
 
@@ -127,5 +137,8 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
 - `pnpm db:generate` — generate a Drizzle migration from `web/db/schema/`, after editing it
 - `pnpm db:migrate` — apply committed migrations to the running Postgres instance
 - `pnpm db:studio` — open Drizzle Studio against the running database
-- `pnpm db:seed` — create the first admin user from `SEED_ADMIN_*` env vars (idempotent)
+- `pnpm db:seed` — create the first admin user from `SEED_ADMIN_*` env vars and insert missing
+  reference data; `SEED_FIXTURES=true` adds the sample customers/orders. Insert-only, never
+  overwrites
+- `pnpm db:seed:check` — re-seeds over edited values and asserts nothing was overwritten
 - `pnpm dev` — run the Next.js dev server (`web/`)
