@@ -8,8 +8,7 @@ import { admin } from "better-auth/plugins";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 
-export const ROLES = ["admin", "export", "production"] as const;
-export type Role = (typeof ROLES)[number];
+import { ac, roles } from "./permissions";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", schema }),
@@ -31,6 +30,8 @@ export const auth = betterAuth({
   },
   plugins: [
     admin({
+      ac,
+      roles,
       defaultRole: "export",
       adminRoles: ["admin"],
     }),

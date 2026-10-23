@@ -1,8 +1,9 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale } from "next-intl/server";
 
-import { ComingSoon } from "@/components/coming-soon";
+import { redirect } from "@/i18n/navigation";
 
+/** Settings has no page of its own; every user can open their profile. */
 export default async function SettingsPage() {
-  const t = await getTranslations();
-  return <ComingSoon title={t("nav.settings")} description={t("common.comingSoonDescription")} />;
+  const locale = await getLocale();
+  redirect({ href: "/settings/profile", locale });
 }

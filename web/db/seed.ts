@@ -16,6 +16,7 @@ async function main() {
   const { betterAuth } = await import("better-auth");
   const { drizzleAdapter } = await import("better-auth/adapters/drizzle");
   const { admin } = await import("better-auth/plugins");
+  const { ac, roles } = await import("../lib/auth/permissions");
 
   const queryClient = postgres(process.env.DATABASE_URL!);
   const db = drizzle(queryClient, { schema });
@@ -30,7 +31,7 @@ async function main() {
         preferredLocale: { type: "string", defaultValue: "tr", input: false },
       },
     },
-    plugins: [admin({ defaultRole: "export", adminRoles: ["admin"] })],
+    plugins: [admin({ ac, roles, defaultRole: "export", adminRoles: ["admin"] })],
   });
 
   async function createUserIfMissing(options: {
@@ -50,10 +51,7 @@ async function main() {
     }
 
     await auth.api.createUser({
-      // Better Auth's admin plugin types `role` against its own built-in
-      // "admin"/"user" roles; at runtime it's validated as a plain string,
-      // so our app-level roles (admin/export/production) are accepted fine.
-      body: { email, password, name, role: role as "admin" | "user", data: { preferredLocale } },
+      body: { email, password, name, role, data: { preferredLocale } },
     });
 
     console.log(`Created user: ${email} (role: ${role}, locale: ${preferredLocale})`);

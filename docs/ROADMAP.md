@@ -1,10 +1,12 @@
 # Roadmap
 
-- [~] **Phase 0 — Foundation** — repo, Docker (Postgres), Next.js app shell, i18n (tr/ar/en) with
-  RTL, authentication (Drizzle + Better Auth), navigation skeleton. *(in progress)*
-- [ ] **Phase 1 — Data model + users management + audit log** — Drizzle schema for every module,
-  relations, committed migrations; users management page (admin creates/edits users, sets role,
-  resets password); `audit_log` table and shared write helper wired into mutating actions.
+- [x] **Phase 0 — Foundation** — repo, Docker (Postgres), Next.js app shell, i18n (tr/ar/en) with
+  RTL, authentication (Drizzle + Better Auth), navigation skeleton.
+- [~] **Phase 1 — Data model + users management + audit log** *(in progress)*
+  - [x] **1.1** — roles & permissions (Better Auth access control, `web/lib/auth/permissions.ts`),
+    users management, my profile, `audit_log` table + `logAudit` helper, audit log page.
+  - [ ] **1.2** — Drizzle schema for the business modules (customers, products, orders, …),
+    relations, committed migrations.
 - [ ] **Phase 2 — Customers & catalog** — customers and product catalog CRUD UIs.
 - [ ] **Phase 3 — Orders** — editable grid, custom columns, realtime updates, history/audit trail.
 - [ ] **Phase 4 — Proforma** — numbering, versions, PDF/Excel export in all 3 languages.

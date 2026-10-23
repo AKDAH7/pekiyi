@@ -1,47 +1,32 @@
-import {
-  FileText,
-  Factory,
-  LayoutDashboard,
-  Package,
-  Settings,
-  ShoppingCart,
-  Tag,
-  Truck,
-  Users,
-} from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
+import { MAIN_NAV, SETTINGS_NAV, type NavItem } from "@/lib/nav";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-const NAV_ITEMS = [
-  { href: "/dashboard", key: "dashboard", icon: LayoutDashboard },
-  { href: "/customers", key: "customers", icon: Users },
-  { href: "/products", key: "products", icon: Package },
-  { href: "/orders", key: "orders", icon: ShoppingCart },
-  { href: "/proformas", key: "proformas", icon: FileText },
-  { href: "/production", key: "production", icon: Factory },
-  { href: "/loading", key: "loading", icon: Truck },
-  { href: "/labels", key: "labels", icon: Tag },
-  { href: "/settings", key: "settings", icon: Settings },
-] as const;
-
 type Props = {
   side: "left" | "right";
+  role: string | null | undefined;
 };
 
-export async function AppSidebar({ side }: Props) {
+export async function AppSidebar({ side, role }: Props) {
   const t = await getTranslations("nav");
   const common = await getTranslations("common");
+
+  const groups: { label?: string; items: NavItem[] }[] = [
+    { items: MAIN_NAV.filter((item) => item.visible(role)) },
+    { label: t("settings"), items: SETTINGS_NAV.filter((item) => item.visible(role)) },
+  ];
 
   return (
     <Sidebar side={side} collapsible="icon">
@@ -51,20 +36,23 @@ export async function AppSidebar({ side }: Props) {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {NAV_ITEMS.map((item) => (
-                <SidebarMenuItem key={item.key}>
-                  <SidebarMenuButton render={<Link href={item.href} />} tooltip={t(item.key)}>
-                    <item.icon />
-                    <span>{t(item.key)}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {groups.map((group, index) => (
+          <SidebarGroup key={group.label ?? index}>
+            {group.label ? <SidebarGroupLabel>{group.label}</SidebarGroupLabel> : null}
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.items.map((item) => (
+                  <SidebarMenuItem key={item.key}>
+                    <SidebarMenuButton render={<Link href={item.href} />} tooltip={t(item.key)}>
+                      <item.icon />
+                      <span>{t(item.key)}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </Sidebar>
   );

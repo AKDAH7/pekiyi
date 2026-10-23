@@ -3,7 +3,13 @@
     "appName": "PEKİYİ Mobilya",
     "comingSoon": "Yakında",
     "comingSoonDescription": "Bu bölüm henüz hazır değil. Yakında burada olacak.",
-    "loading": "Yükleniyor..."
+    "loading": "Yükleniyor...",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor...",
+    "cancel": "İptal",
+    "saved": "Kaydedildi.",
+    "yes": "Evet",
+    "no": "Hayır"
   },
   "nav": {
     "dashboard": "Panel",
@@ -14,7 +20,10 @@
     "production": "Üretim",
     "loading": "Yükleme Kontrol",
     "labels": "Etiketler",
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "profile": "Profilim",
+    "users": "Kullanıcılar",
+    "audit": "İşlem kaydı"
   },
   "login": {
     "title": "Giriş Yap",
@@ -24,7 +33,8 @@
     "submit": "Giriş Yap",
     "submitting": "Giriş yapılıyor...",
     "errorInvalidCredentials": "E-posta veya şifre hatalı.",
-    "errorGeneric": "Giriş yapılamadı. Lütfen tekrar deneyin."
+    "errorGeneric": "Giriş yapılamadı. Lütfen tekrar deneyin.",
+    "errorDeactivated": "Bu hesap devre dışı bırakıldı. Bir yöneticiyle iletişime geçin."
   },
   "topbar": {
     "language": "Dil",
@@ -35,5 +45,141 @@
     "tr": "Türkçe",
     "ar": "العربية",
     "en": "English"
+  },
+  "forbidden": {
+    "title": "Yetkiniz yok",
+    "description": "Bu sayfayı görüntüleme yetkiniz yok.",
+    "backToDashboard": "Panele dön"
+  },
+  "roles": {
+    "admin": "Yönetici",
+    "export": "İhracat",
+    "production": "Üretim"
+  },
+  "validation": {
+    "invalid": "Bu değer geçerli değil.",
+    "required": "Bu alan zorunludur.",
+    "tooLong": "Bu değer çok uzun.",
+    "invalidEmail": "Geçerli bir e-posta adresi girin.",
+    "passwordTooShort": "Şifre en az 8 karakter olmalıdır.",
+    "passwordTooLong": "Şifre en fazla 128 karakter olabilir.",
+    "passwordsDontMatch": "Şifreler eşleşmiyor.",
+    "currentPasswordWrong": "Mevcut şifre hatalı.",
+    "invalidRole": "Bir rol seçin.",
+    "invalidLocale": "Bir dil seçin.",
+    "emailTaken": "Bu e-posta adresi başka bir kullanıcı tarafından kullanılıyor.",
+    "userNotFound": "Bu kullanıcı artık mevcut değil.",
+    "cannotDeactivateSelf": "Kendi hesabınızı devre dışı bırakamazsınız.",
+    "cannotRemoveOwnAdmin": "Kendi yönetici rolünüzü kaldıramazsınız.",
+    "lastActiveAdmin": "Her zaman en az bir aktif yönetici bulunmalıdır."
+  },
+  "users": {
+    "title": "Kullanıcılar",
+    "description": "Hesap oluşturun, rol atayın ve şifre sıfırlayın.",
+    "searchPlaceholder": "Ad veya e-posta ile ara",
+    "search": "Ara",
+    "newUser": "Yeni kullanıcı",
+    "empty": "Kullanıcı bulunamadı.",
+    "you": "Siz",
+    "columns": {
+      "name": "Ad",
+      "email": "E-posta",
+      "role": "Rol",
+      "language": "Dil",
+      "status": "Durum",
+      "createdAt": "Oluşturulma",
+      "actions": "İşlemler"
+    },
+    "status": {
+      "active": "Aktif",
+      "deactivated": "Devre dışı"
+    },
+    "fields": {
+      "name": "Ad",
+      "email": "E-posta",
+      "role": "Rol",
+      "language": "Tercih edilen dil",
+      "initialPassword": "İlk şifre",
+      "newPassword": "Yeni şifre"
+    },
+    "generate": "Oluştur",
+    "passwordHint": "En az 8 karakter. Kullanıcıyla güvenli bir şekilde paylaşın.",
+    "selfRoleHint": "Kendi rolünüzü değiştiremezsiniz.",
+    "actionsMenu": "{name} için işlemler",
+    "edit": "Düzenle",
+    "resetPassword": "Şifreyi sıfırla",
+    "deactivate": "Devre dışı bırak",
+    "reactivate": "Yeniden etkinleştir",
+    "createTitle": "Yeni kullanıcı",
+    "createSubmit": "Kullanıcı oluştur",
+    "editTitle": "Kullanıcıyı düzenle",
+    "resetTitle": "Şifreyi sıfırla",
+    "resetDescription": "{name} için yeni bir şifre belirleyin. Tüm cihazlardaki oturumları kapatılacak.",
+    "resetSubmit": "Şifreyi ayarla",
+    "deactivateTitle": "{name} devre dışı bırakılsın mı?",
+    "deactivateDescription": "Oturumu hemen kapatılacak ve giriş yapamayacak. Geçmiş kayıtları korunur.",
+    "reactivateTitle": "{name} yeniden etkinleştirilsin mi?",
+    "reactivateDescription": "Mevcut şifresiyle yeniden giriş yapabilecek."
+  },
+  "profile": {
+    "title": "Profilim",
+    "description": "Adınız, diliniz ve şifreniz.",
+    "detailsTitle": "Bilgiler",
+    "name": "Ad",
+    "email": "E-posta",
+    "role": "Rol",
+    "language": "Tercih edilen dil",
+    "passwordTitle": "Şifre değiştir",
+    "currentPassword": "Mevcut şifre",
+    "newPassword": "Yeni şifre",
+    "confirmPassword": "Yeni şifre (tekrar)",
+    "changePassword": "Şifreyi değiştir",
+    "passwordChanged": "Şifre değiştirildi. Diğer cihazlardaki oturumlarınız kapatıldı."
+  },
+  "audit": {
+    "title": "İşlem kaydı",
+    "description": "Sistemde yapılan tüm değişiklikler, en yeniden eskiye.",
+    "filterUser": "Kullanıcı",
+    "allUsers": "Tüm kullanıcılar",
+    "filterEntity": "Kayıt türü",
+    "allEntities": "Tüm kayıt türleri",
+    "apply": "Uygula",
+    "clear": "Temizle",
+    "empty": "Kayıt bulunamadı.",
+    "system": "Sistem",
+    "columns": {
+      "time": "Zaman",
+      "user": "Kullanıcı",
+      "action": "İşlem",
+      "record": "Kayıt"
+    },
+    "showDetails": "Ayrıntıları göster",
+    "hideDetails": "Ayrıntıları gizle",
+    "field": "Alan",
+    "before": "Önce",
+    "after": "Sonra",
+    "noDetails": "Bu işlem için alan ayrıntısı kaydedilmez.",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "pageOf": "Sayfa {page} / {pageCount}",
+    "entities": {
+      "user": "Kullanıcı"
+    },
+    "actions": {
+      "create": "Oluşturuldu",
+      "update": "Güncellendi",
+      "delete": "Silindi",
+      "deactivate": "Devre dışı bırakıldı",
+      "reactivate": "Yeniden etkinleştirildi",
+      "password_reset": "Şifre sıfırlandı",
+      "password_change": "Şifre değiştirildi"
+    },
+    "fields": {
+      "name": "Ad",
+      "email": "E-posta",
+      "role": "Rol",
+      "preferredLocale": "Tercih edilen dil",
+      "active": "Aktif"
+    }
   }
 }

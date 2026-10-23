@@ -11,6 +11,11 @@ config({ path: path.resolve(__dirname, "../.env") });
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Enables `forbidden()` + forbidden.tsx, used by requirePermission() to
+    // render the "No permission" page instead of redirecting.
+    authInterrupts: true,
+  },
   turbopack: {
     rules: {
       "*.css": {

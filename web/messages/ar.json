@@ -3,7 +3,13 @@
     "appName": "PEKİYİ Mobilya",
     "comingSoon": "قريبًا",
     "comingSoonDescription": "هذا القسم غير جاهز بعد. ترقّب قريبًا.",
-    "loading": "جارٍ التحميل..."
+    "loading": "جارٍ التحميل...",
+    "save": "حفظ",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+    "saved": "تم الحفظ.",
+    "yes": "نعم",
+    "no": "لا"
   },
   "nav": {
     "dashboard": "لوحة التحكم",
@@ -14,7 +20,10 @@
     "production": "الإنتاج",
     "loading": "مراقبة التحميل",
     "labels": "الملصقات",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "profile": "ملفي الشخصي",
+    "users": "المستخدمون",
+    "audit": "سجل العمليات"
   },
   "login": {
     "title": "تسجيل الدخول",
@@ -24,7 +33,8 @@
     "submit": "تسجيل الدخول",
     "submitting": "جارٍ تسجيل الدخول...",
     "errorInvalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
-    "errorGeneric": "تعذّر تسجيل الدخول. يرجى المحاولة مرة أخرى."
+    "errorGeneric": "تعذّر تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+    "errorDeactivated": "تم تعطيل هذا الحساب. يرجى التواصل مع المسؤول."
   },
   "topbar": {
     "language": "اللغة",
@@ -35,5 +45,141 @@
     "tr": "Türkçe",
     "ar": "العربية",
     "en": "English"
+  },
+  "forbidden": {
+    "title": "لا توجد صلاحية",
+    "description": "ليست لديك صلاحية لعرض هذه الصفحة.",
+    "backToDashboard": "العودة إلى لوحة التحكم"
+  },
+  "roles": {
+    "admin": "مسؤول",
+    "export": "التصدير",
+    "production": "الإنتاج"
+  },
+  "validation": {
+    "invalid": "هذه القيمة غير صالحة.",
+    "required": "هذا الحقل مطلوب.",
+    "tooLong": "هذه القيمة طويلة جدًا.",
+    "invalidEmail": "أدخل بريدًا إلكترونيًا صالحًا.",
+    "passwordTooShort": "يجب ألا تقل كلمة المرور عن 8 أحرف.",
+    "passwordTooLong": "يجب ألا تزيد كلمة المرور عن 128 حرفًا.",
+    "passwordsDontMatch": "كلمتا المرور غير متطابقتين.",
+    "currentPasswordWrong": "كلمة المرور الحالية غير صحيحة.",
+    "invalidRole": "اختر دورًا.",
+    "invalidLocale": "اختر لغة.",
+    "emailTaken": "هذا البريد الإلكتروني مستخدم من قبل مستخدم آخر.",
+    "userNotFound": "هذا المستخدم لم يعد موجودًا.",
+    "cannotDeactivateSelf": "لا يمكنك تعطيل حسابك الخاص.",
+    "cannotRemoveOwnAdmin": "لا يمكنك إزالة دور المسؤول عن نفسك.",
+    "lastActiveAdmin": "يجب أن يبقى مسؤول نشط واحد على الأقل دائمًا."
+  },
+  "users": {
+    "title": "المستخدمون",
+    "description": "أنشئ الحسابات وحدد الأدوار وأعد تعيين كلمات المرور.",
+    "searchPlaceholder": "ابحث بالاسم أو البريد الإلكتروني",
+    "search": "بحث",
+    "newUser": "مستخدم جديد",
+    "empty": "لم يتم العثور على مستخدمين.",
+    "you": "أنت",
+    "columns": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "language": "اللغة",
+      "status": "الحالة",
+      "createdAt": "تاريخ الإنشاء",
+      "actions": "الإجراءات"
+    },
+    "status": {
+      "active": "نشط",
+      "deactivated": "معطّل"
+    },
+    "fields": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "language": "اللغة المفضلة",
+      "initialPassword": "كلمة المرور الأولية",
+      "newPassword": "كلمة المرور الجديدة"
+    },
+    "generate": "توليد",
+    "passwordHint": "8 أحرف على الأقل. شاركها مع المستخدم بطريقة آمنة.",
+    "selfRoleHint": "لا يمكنك تغيير دورك الخاص.",
+    "actionsMenu": "إجراءات {name}",
+    "edit": "تعديل",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "deactivate": "تعطيل",
+    "reactivate": "إعادة التفعيل",
+    "createTitle": "مستخدم جديد",
+    "createSubmit": "إنشاء المستخدم",
+    "editTitle": "تعديل المستخدم",
+    "resetTitle": "إعادة تعيين كلمة المرور",
+    "resetDescription": "عيّن كلمة مرور جديدة لـ {name}. سيتم تسجيل خروجه من جميع الأجهزة.",
+    "resetSubmit": "تعيين كلمة المرور",
+    "deactivateTitle": "تعطيل {name}؟",
+    "deactivateDescription": "سيتم تسجيل خروجه فورًا ولن يتمكن من تسجيل الدخول. يبقى سجله محفوظًا.",
+    "reactivateTitle": "إعادة تفعيل {name}؟",
+    "reactivateDescription": "سيتمكن من تسجيل الدخول مجددًا بكلمة مروره الحالية."
+  },
+  "profile": {
+    "title": "ملفي الشخصي",
+    "description": "اسمك ولغتك وكلمة مرورك.",
+    "detailsTitle": "المعلومات",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "role": "الدور",
+    "language": "اللغة المفضلة",
+    "passwordTitle": "تغيير كلمة المرور",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "changePassword": "تغيير كلمة المرور",
+    "passwordChanged": "تم تغيير كلمة المرور. تم تسجيل خروجك من الأجهزة الأخرى."
+  },
+  "audit": {
+    "title": "سجل العمليات",
+    "description": "كل التغييرات التي أُجريت في النظام، الأحدث أولًا.",
+    "filterUser": "المستخدم",
+    "allUsers": "كل المستخدمين",
+    "filterEntity": "نوع السجل",
+    "allEntities": "كل أنواع السجلات",
+    "apply": "تطبيق",
+    "clear": "مسح",
+    "empty": "لا توجد سجلات.",
+    "system": "النظام",
+    "columns": {
+      "time": "الوقت",
+      "user": "المستخدم",
+      "action": "العملية",
+      "record": "السجل"
+    },
+    "showDetails": "عرض التفاصيل",
+    "hideDetails": "إخفاء التفاصيل",
+    "field": "الحقل",
+    "before": "قبل",
+    "after": "بعد",
+    "noDetails": "لا تُسجَّل تفاصيل الحقول لهذه العملية.",
+    "previous": "السابق",
+    "next": "التالي",
+    "pageOf": "الصفحة {page} من {pageCount}",
+    "entities": {
+      "user": "مستخدم"
+    },
+    "actions": {
+      "create": "إنشاء",
+      "update": "تعديل",
+      "delete": "حذف",
+      "deactivate": "تعطيل",
+      "reactivate": "إعادة تفعيل",
+      "password_reset": "إعادة تعيين كلمة المرور",
+      "password_change": "تغيير كلمة المرور"
+    },
+    "fields": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "role": "الدور",
+      "preferredLocale": "اللغة المفضلة",
+      "active": "نشط"
+    }
   }
 }

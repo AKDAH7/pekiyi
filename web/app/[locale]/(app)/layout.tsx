@@ -22,7 +22,7 @@ export default async function AppLayout({ children }: Props) {
 
   return (
     <SidebarProvider>
-      <AppSidebar side={side} />
+      <AppSidebar side={side} role={user.role} />
       <SidebarInset>
         <Topbar displayName={displayName} />
         <main className="flex-1 overflow-auto p-6">{children}</main>

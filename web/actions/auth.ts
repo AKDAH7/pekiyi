@@ -1,15 +1,17 @@
 "use server";
 
 import { headers } from "next/headers";
+import { hasLocale } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { z } from "zod";
 import { APIError } from "better-auth/api";
 
 import { redirect } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import { auth } from "@/lib/auth/auth";
 
 export type LoginFormState = {
-  error?: "errorInvalidCredentials" | "errorGeneric";
+  error?: "errorInvalidCredentials" | "errorDeactivated" | "errorGeneric";
 };
 
 const loginSchema = z.object({
@@ -30,10 +32,14 @@ export async function loginAction(
     return { error: "errorGeneric" };
   }
 
+  let preferredLocale: string;
   try {
-    await auth.api.signInEmail({ body: parsed.data });
+    const result = await auth.api.signInEmail({ body: parsed.data });
+    preferredLocale = result.user.preferredLocale;
   } catch (error) {
     if (error instanceof APIError) {
+      // Raised by the admin plugin for deactivated (banned) users.
+      if (error.body?.code === "BANNED_USER") return { error: "errorDeactivated" };
       return { error: "errorInvalidCredentials" };
     }
     // Not a rejection from Better Auth itself (e.g. a bug in our own config) —
@@ -42,7 +48,8 @@ export async function loginAction(
     return { error: "errorGeneric" };
   }
 
-  const locale = await getLocale();
+  // Land in the user's preferred language.
+  const locale = hasLocale(routing.locales, preferredLocale) ? preferredLocale : await getLocale();
   throw redirect({ href: "/dashboard", locale });
 }
 

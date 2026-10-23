@@ -26,14 +26,15 @@ export default async function proxy(request: NextRequest) {
   // (app/[locale]/(app)/layout.tsx) and every server action/route handler
   // call requireUser()/requireRole() to validate the session against the
   // database on every request.
+  //
+  // We deliberately don't bounce cookie-holders away from /login here: a
+  // cookie can outlive its session (expired, or revoked on deactivation), and
+  // that would loop between /login and the protected layout. The login page
+  // does the real session check instead.
   const hasSessionCookie = Boolean(getSessionCookie(request));
 
   if (!hasSessionCookie && !isPublicPath) {
     return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
-  }
-
-  if (hasSessionCookie && isPublicPath) {
-    return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
   }
 
   return intlMiddleware(request);

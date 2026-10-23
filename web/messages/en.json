@@ -3,7 +3,13 @@
     "appName": "PEKİYİ Mobilya",
     "comingSoon": "Coming soon",
     "comingSoonDescription": "This section isn't ready yet. Check back soon.",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "saved": "Saved.",
+    "yes": "Yes",
+    "no": "No"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -14,7 +20,10 @@
     "production": "Production",
     "loading": "Loading Control",
     "labels": "Labels",
-    "settings": "Settings"
+    "settings": "Settings",
+    "profile": "My profile",
+    "users": "Users",
+    "audit": "Audit log"
   },
   "login": {
     "title": "Sign in",
@@ -24,7 +33,8 @@
     "submit": "Sign in",
     "submitting": "Signing in...",
     "errorInvalidCredentials": "Incorrect email or password.",
-    "errorGeneric": "Could not sign in. Please try again."
+    "errorGeneric": "Could not sign in. Please try again.",
+    "errorDeactivated": "This account has been deactivated. Contact an administrator."
   },
   "topbar": {
     "language": "Language",
@@ -35,5 +45,141 @@
     "tr": "Türkçe",
     "ar": "العربية",
     "en": "English"
+  },
+  "forbidden": {
+    "title": "No permission",
+    "description": "You don't have permission to view this page.",
+    "backToDashboard": "Back to dashboard"
+  },
+  "roles": {
+    "admin": "Admin",
+    "export": "Export",
+    "production": "Production"
+  },
+  "validation": {
+    "invalid": "This value is not valid.",
+    "required": "This field is required.",
+    "tooLong": "This value is too long.",
+    "invalidEmail": "Enter a valid email address.",
+    "passwordTooShort": "Password must be at least 8 characters.",
+    "passwordTooLong": "Password must be at most 128 characters.",
+    "passwordsDontMatch": "Passwords don't match.",
+    "currentPasswordWrong": "Current password is incorrect.",
+    "invalidRole": "Choose a role.",
+    "invalidLocale": "Choose a language.",
+    "emailTaken": "Another user already uses this email.",
+    "userNotFound": "This user no longer exists.",
+    "cannotDeactivateSelf": "You can't deactivate your own account.",
+    "cannotRemoveOwnAdmin": "You can't remove your own admin role.",
+    "lastActiveAdmin": "There must always be at least one active admin."
+  },
+  "users": {
+    "title": "Users",
+    "description": "Create accounts, set roles and reset passwords.",
+    "searchPlaceholder": "Search by name or email",
+    "search": "Search",
+    "newUser": "New user",
+    "empty": "No users found.",
+    "you": "You",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "language": "Language",
+      "status": "Status",
+      "createdAt": "Created",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "deactivated": "Deactivated"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "language": "Preferred language",
+      "initialPassword": "Initial password",
+      "newPassword": "New password"
+    },
+    "generate": "Generate",
+    "passwordHint": "At least 8 characters. Share it with the user securely.",
+    "selfRoleHint": "You can't change your own role.",
+    "actionsMenu": "Actions for {name}",
+    "edit": "Edit",
+    "resetPassword": "Reset password",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "createTitle": "New user",
+    "createSubmit": "Create user",
+    "editTitle": "Edit user",
+    "resetTitle": "Reset password",
+    "resetDescription": "Set a new password for {name}. They will be signed out of all devices.",
+    "resetSubmit": "Set password",
+    "deactivateTitle": "Deactivate {name}?",
+    "deactivateDescription": "They will be signed out immediately and won't be able to log in. Their history is kept.",
+    "reactivateTitle": "Reactivate {name}?",
+    "reactivateDescription": "They will be able to log in again with their current password."
+  },
+  "profile": {
+    "title": "My profile",
+    "description": "Your name, language and password.",
+    "detailsTitle": "Details",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "language": "Preferred language",
+    "passwordTitle": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "changePassword": "Change password",
+    "passwordChanged": "Password changed. Your other devices were signed out."
+  },
+  "audit": {
+    "title": "Audit log",
+    "description": "Every change made in the system, newest first.",
+    "filterUser": "User",
+    "allUsers": "All users",
+    "filterEntity": "Record type",
+    "allEntities": "All record types",
+    "apply": "Apply",
+    "clear": "Clear",
+    "empty": "No entries found.",
+    "system": "System",
+    "columns": {
+      "time": "Time",
+      "user": "User",
+      "action": "Action",
+      "record": "Record"
+    },
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "field": "Field",
+    "before": "Before",
+    "after": "After",
+    "noDetails": "No field details are recorded for this action.",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page} of {pageCount}",
+    "entities": {
+      "user": "User"
+    },
+    "actions": {
+      "create": "Created",
+      "update": "Updated",
+      "delete": "Deleted",
+      "deactivate": "Deactivated",
+      "reactivate": "Reactivated",
+      "password_reset": "Password reset",
+      "password_change": "Password changed"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "preferredLocale": "Preferred language",
+      "active": "Active"
+    }
   }
 }
