@@ -70,11 +70,4 @@ export async function authContext() {
   };
 }
 
-/** Postgres unique-constraint violation (also when wrapped by Drizzle). */
-export function isUniqueViolation(error: unknown): boolean {
-  for (let current = error; current instanceof Object; ) {
-    if ("code" in current && current.code === "23505") return true;
-    current = "cause" in current ? current.cause : undefined;
-  }
-  return false;
-}
+export { isUniqueViolation } from "@/lib/db/errors";

@@ -6,18 +6,18 @@ const APP_RESOURCES = [
   "users",
   "auditLog",
   "customers",
-  "products",
+  "catalog",
   "orders",
   "proformas",
   "production",
   "loading",
   "labels",
   "prices",
+  "settings",
 ] as const satisfies readonly Resource[];
 
 const BUSINESS_RESOURCES = [
   "customers",
-  "products",
   "orders",
   "proformas",
   "production",
@@ -71,8 +71,20 @@ describe("permission map", () => {
       }
     });
 
-    it("can see prices", () => {
+    it("reads, creates and updates the catalog but never deletes from it", () => {
+      expect(can("export", "catalog", "read")).toBe(true);
+      expect(can("export", "catalog", "create")).toBe(true);
+      expect(can("export", "catalog", "update")).toBe(true);
+      expect(can("export", "catalog", "delete")).toBe(false);
+    });
+
+    it("sees prices but cannot change them", () => {
       expect(can("export", "prices", "read")).toBe(true);
+      expect(can("export", "prices", "update")).toBe(false);
+    });
+
+    it("has no access to company settings, bank accounts or rate entry", () => {
+      for (const action of statements.settings) expect(can("export", "settings", action)).toBe(false);
     });
 
     it("has no access to users or the audit log", () => {
@@ -104,8 +116,8 @@ describe("permission map", () => {
       expect(granted("production", "prices")).toEqual([]);
     });
 
-    it("has no access to customers, products, orders, proformas, users or the audit log", () => {
-      for (const resource of ["customers", "products", "orders", "proformas"] as const) {
+    it("has no access to customers, catalog, orders, settings, proformas, users or the audit log", () => {
+      for (const resource of ["customers", "catalog", "orders", "proformas", "settings"] as const) {
         expect(can("production", resource, "read")).toBe(false);
       }
       expect(can("production", "users", "read")).toBe(false);

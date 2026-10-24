@@ -38,3 +38,12 @@ export async function logAudit(tx: Tx, entry: AuditEntry): Promise<void> {
     after: snapshot(entry.after),
   });
 }
+
+/** Columns every business table has that say nothing about the change itself. */
+const BOOKKEEPING_COLUMNS = new Set(["id", "createdAt", "updatedAt", "createdBy", "version"]);
+
+/** A table row as an audit `before`/`after` snapshot, without bookkeeping columns. */
+export function rowSnapshot(row: object | null | undefined): Record<string, unknown> | null {
+  if (!row) return null;
+  return Object.fromEntries(Object.entries(row).filter(([key]) => !BOOKKEEPING_COLUMNS.has(key)));
+}

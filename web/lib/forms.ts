@@ -7,12 +7,15 @@ import type { FormState } from "./form-state";
 
 export type { FormState };
 
-/** Translates a zod error into `{ field: message }` (first error per field). */
+/**
+ * Translates a zod error into `{ field: message }` (first error per field).
+ * Nested fields are keyed by their dotted path: "name.tr", "pieces.2.unitCbm".
+ */
 export async function fieldErrorsFrom(error: z.ZodError): Promise<FormState> {
   const t = await getTranslations("validation");
   const fieldErrors: Record<string, string> = {};
   for (const issue of error.issues) {
-    const field = String(issue.path[0] ?? "");
+    const field = issue.path.map(String).join(".");
     if (!field || fieldErrors[field]) continue;
     fieldErrors[field] = t.has(issue.message) ? t(issue.message) : t("invalid");
   }
@@ -31,4 +34,10 @@ export async function formError(key: string): Promise<FormState> {
 
 export function success(): FormState {
   return { status: "success", successAt: Date.now() };
+}
+
+/** "This record was changed by someone else — reload" (optimistic locking). */
+export async function conflict(): Promise<FormState> {
+  const t = await getTranslations("validation");
+  return { status: "error", conflict: true, formError: t("conflict") };
 }

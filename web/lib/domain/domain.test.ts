@@ -279,8 +279,40 @@ describe("computeLabelCount", () => {
     expect(computeLabelCount(order)).toBe(8);
     const packed = {
       pieces: [{ model: "DAMLA", pieceType: "SEAT_3", basePrice: null, baseCurrency: "TRY", packageCount: 3 }],
+      accessoryPieceTypes: ["CUSHION_EXTRA"],
     };
     expect(computeLabelCount(order, packed)).toBe(2 * 2 * 3 + 2 * 2);
+  });
+
+  it("gives accessories without a catalog row no label of their own", () => {
+    const withCushions = {
+      items: [
+        {
+          model: "İKLİM",
+          quantity: 6,
+          unit: "SET" as const,
+          fabrics: [],
+          pieces: [
+            { pieceType: "SEAT_3", qtyPerUnit: 2 },
+            { pieceType: "SEAT_1", qtyPerUnit: 2 },
+            { pieceType: "CUSHION_EXTRA", qtyPerUnit: 2 },
+          ],
+        },
+      ],
+    };
+    const noRows = { pieces: [], accessoryPieceTypes: ["CUSHION_EXTRA"] };
+    // The cushions travel inside the 3-seater packages.
+    expect(computeLabelCount(withCushions, noRows)).toBe(6 * 4);
+
+    // An accessory with its own catalog row counts its packages (default 1).
+    const ownBox = {
+      pieces: [{ model: "İKLİM", pieceType: "CUSHION_EXTRA", basePrice: null, baseCurrency: "TRY" }],
+      accessoryPieceTypes: ["CUSHION_EXTRA"],
+    };
+    expect(computeLabelCount(withCushions, ownBox)).toBe(6 * 4 + 6 * 2);
+    expect(computeLabelCount(withCushions, { ...ownBox, pieces: [{ ...ownBox.pieces[0], packageCount: 0 }] })).toBe(
+      6 * 4,
+    );
   });
 });
 

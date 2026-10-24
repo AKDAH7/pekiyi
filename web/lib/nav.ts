@@ -1,4 +1,6 @@
 import {
+  Building,
+  Coins,
   Factory,
   FileText,
   History,
@@ -6,6 +8,7 @@ import {
   type LucideIcon,
   Package,
   ShoppingCart,
+  Landmark,
   Tag,
   Truck,
   UserCog,
@@ -29,7 +32,7 @@ const everyone = () => true;
 export const MAIN_NAV: NavItem[] = [
   { href: "/dashboard", key: "dashboard", icon: LayoutDashboard, visible: everyone },
   { href: "/customers", key: "customers", icon: Users, visible: (r) => can(r, "customers", "read") },
-  { href: "/products", key: "products", icon: Package, visible: (r) => can(r, "products", "read") },
+  { href: "/products", key: "products", icon: Package, visible: (r) => can(r, "catalog", "read") },
   { href: "/orders", key: "orders", icon: ShoppingCart, visible: (r) => can(r, "orders", "read") },
   {
     href: "/proformas",
@@ -49,6 +52,25 @@ export const MAIN_NAV: NavItem[] = [
 
 export const SETTINGS_NAV: NavItem[] = [
   { href: "/settings/profile", key: "profile", icon: UserCog, visible: everyone },
+  {
+    href: "/settings/company",
+    key: "company",
+    icon: Building,
+    visible: (r) => can(r, "settings", "read"),
+  },
+  {
+    href: "/settings/bank-accounts",
+    key: "bankAccounts",
+    icon: Landmark,
+    visible: (r) => can(r, "settings", "read"),
+  },
+  {
+    // Export users may look at the rates (they price with them); only admins add them.
+    href: "/settings/exchange-rates",
+    key: "exchangeRates",
+    icon: Coins,
+    visible: (r) => can(r, "prices", "read"),
+  },
   { href: "/settings/users", key: "users", icon: UsersRound, visible: (r) => can(r, "users", "read") },
   { href: "/settings/audit", key: "audit", icon: History, visible: (r) => can(r, "auditLog", "read") },
 ];

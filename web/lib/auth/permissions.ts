@@ -19,7 +19,9 @@ export const statements = {
   users: ["read", "create", "update", "deactivate", "resetPassword"],
   auditLog: ["read"],
   customers: CRUD,
-  products: CRUD,
+  // Models, piece packing data, presets and fabrics. Price fields inside the
+  // catalog are guarded separately by `prices.update`.
+  catalog: CRUD,
   orders: CRUD,
   proformas: CRUD,
   production: CRUD,
@@ -28,6 +30,9 @@ export const statements = {
   // Separate resource so price fields can be hidden everywhere for roles
   // without `prices.read` (production must never see prices).
   prices: ["read", "update"],
+  // Company settings, bank accounts and exchange rates (admin only). Reading
+  // exchange rates needs `prices.read`: rates are price data too.
+  settings: ["read", "update"],
 } as const;
 
 export const ac = createAccessControl(statements);
@@ -41,23 +46,26 @@ export const roles = {
     users: [...statements.users],
     auditLog: [...statements.auditLog],
     customers: [...CRUD],
-    products: [...CRUD],
+    catalog: [...CRUD],
     orders: [...CRUD],
     proformas: [...CRUD],
     production: [...CRUD],
     loading: [...CRUD],
     labels: [...CRUD],
     prices: [...statements.prices],
+    settings: [...statements.settings],
   }),
   export: ac.newRole({
     customers: [...CRUD],
-    products: [...CRUD],
+    // Maintains the catalog but never deletes from it.
+    catalog: ["read", "create", "update"],
     orders: [...CRUD],
     proformas: [...CRUD],
     production: [...CRUD],
     loading: [...CRUD],
     labels: [...CRUD],
-    prices: ["read", "update"],
+    // Sees catalog prices and exchange rates; only admins change them.
+    prices: ["read"],
   }),
   production: ac.newRole({
     production: ["read"],

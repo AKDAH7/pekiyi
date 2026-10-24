@@ -93,7 +93,8 @@ describe("sample order 261020ZOC-REV1 (VIRONA, SE) — zero-price extra cushions
     expect(byType.SEAT_3).toBe(order.expected.seat3);
     expect(byType.SEAT_1).toBe(order.expected.seat1);
     expect(byType.CUSHION_EXTRA).toBe(order.expected.extraCushions);
-    expect(computeLabelCount(domain, catalog)).toBe(180);
+    // The cushions have no catalog row and ship inside the 3-seater packages.
+    expect(computeLabelCount(domain, catalog)).toBe(120);
   });
 
   it("the cushions do not change any line price", () => {

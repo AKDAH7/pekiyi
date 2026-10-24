@@ -13,19 +13,30 @@ export function isValidEan13(code: string): boolean {
 }
 
 /**
+ * Packages one piece ships in when the catalog says nothing: 1, except for
+ * accessories without a catalog row, which travel inside another piece's
+ * package (the extra cushion goes in its 3-seater's box) — 0.
+ */
+export function defaultPackageCount(pieceType: string, catalog?: Pick<Catalog, "accessoryPieceTypes">) {
+  return catalog?.accessoryPieceTypes.includes(pieceType) ? 0 : 1;
+}
+
+/**
  * Labels to print for an order: Σ pieces × package count of that piece
- * (from the catalog, default 1). Accessories count like any other piece; set
- * their package_count to 0 in the catalog if they ship inside another box.
+ * (from the catalog row; `defaultPackageCount` when there is none). An
+ * accessory that has its own box gets a catalog row with package_count ≥ 1.
  */
 export function computeLabelCount(
   order: Pick<OrderForTotals, "items">,
-  catalog?: Pick<Catalog, "pieces">,
+  catalog?: Pick<Catalog, "pieces" | "accessoryPieceTypes">,
 ): number {
   let labels = 0;
   for (const line of order.items) {
     for (const piece of line.pieces) {
       const entry = catalog && findCatalogPiece(catalog, effectiveModel(line, piece), piece.pieceType);
-      const packageCount = entry?.packageCount ?? 1;
+      const packageCount = entry
+        ? (entry.packageCount ?? 1)
+        : defaultPackageCount(piece.pieceType, catalog);
       labels += line.quantity * piece.qtyPerUnit * packageCount;
     }
   }

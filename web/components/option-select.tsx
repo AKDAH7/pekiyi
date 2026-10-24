@@ -21,13 +21,30 @@ type Props = {
   options: Option[];
   disabled?: boolean;
   invalid?: boolean;
+  onValueChange?: (value: string) => void;
 };
 
 /** A form-friendly Select: submits `name=value` like a native <select>. */
-export function OptionSelect({ id, name, defaultValue, options, disabled, invalid }: Props) {
+export function OptionSelect({
+  id,
+  name,
+  defaultValue,
+  options,
+  disabled,
+  invalid,
+  onValueChange,
+}: Props) {
   return (
     <>
-      <Select name={name} defaultValue={defaultValue} items={options} disabled={disabled}>
+      <Select
+        name={name}
+        defaultValue={defaultValue}
+        items={options}
+        disabled={disabled}
+        onValueChange={(value) => {
+          if (typeof value === "string") onValueChange?.(value);
+        }}
+      >
         <SelectTrigger id={id} className="w-full" aria-invalid={invalid || undefined}>
           <SelectValue />
         </SelectTrigger>

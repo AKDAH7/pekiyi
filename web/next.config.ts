@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
     // Enables `forbidden()` + forbidden.tsx, used by requirePermission() to
     // render the "No permission" page instead of redirecting.
     authInterrupts: true,
+    // Photo/logo uploads go through server actions: up to 10 MB per image
+    // (lib/storage) plus multipart overhead and the other form fields. The
+    // proxy buffers request bodies too, so it needs the same headroom.
+    serverActions: { bodySizeLimit: "11mb" },
+    proxyClientMaxBodySize: "11mb",
   },
   turbopack: {
     rules: {

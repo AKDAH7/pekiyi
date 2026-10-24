@@ -23,9 +23,10 @@ export default async function AppLayout({ children }: Props) {
   return (
     <SidebarProvider>
       <AppSidebar side={side} role={user.role} />
-      <SidebarInset>
+      {/* min-w-0: wide tables scroll inside their own box; the page never scrolls sideways. */}
+      <SidebarInset className="min-w-0">
         <Topbar displayName={displayName} />
-        <main className="flex-1 overflow-auto p-6">{children}</main>
+        <main className="min-w-0 flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

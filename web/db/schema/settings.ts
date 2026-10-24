@@ -9,6 +9,7 @@ import {
   pgTable,
   text,
   unique,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 
@@ -61,6 +62,10 @@ export const bankAccounts = pgTable(
   (table) => [
     check("bank_accounts_currency_check", currencyCheck(table.currency)),
     index("bank_accounts_currency_idx").on(table.currency),
+    // One active account per currency: documents print "the" EUR IBAN.
+    uniqueIndex("bank_accounts_active_currency_unique")
+      .on(table.currency)
+      .where(sql`${table.active}`),
   ],
 );
 

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "bank_accounts_active_currency_unique" ON "bank_accounts" USING btree ("currency") WHERE "bank_accounts"."active";
