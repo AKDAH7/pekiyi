@@ -83,6 +83,10 @@ export const customerProductCodes = pgTable(
   },
   (table) => [
     unique("customer_product_codes_customer_barcode_unique").on(table.customerId, table.barcode),
+    // One code per product variant; "every piece type / fabric" (null) counts as one variant.
+    unique("customer_product_codes_customer_product_unique")
+      .on(table.customerId, table.modelId, table.pieceTypeId, table.fabricId)
+      .nullsNotDistinct(),
     index("customer_product_codes_model_idx").on(table.modelId),
     index("customer_product_codes_piece_type_idx").on(table.pieceTypeId),
     index("customer_product_codes_fabric_idx").on(table.fabricId),

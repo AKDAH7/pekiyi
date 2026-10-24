@@ -4,11 +4,8 @@ import { and, asc, eq, ilike, inArray, or, sql, type SQL } from "drizzle-orm";
 
 import { db } from "@/db";
 import { fabrics, modelPiecePrices, modelPresets, models, pieceTypes } from "@/db/schema";
+import { escapeLike } from "@/lib/db/like";
 import type { Catalog } from "@/lib/domain/types";
-
-function escapeLike(value: string) {
-  return value.replace(/[\\%_]/g, (char) => `\\${char}`);
-}
 
 export async function listPieceTypes() {
   return db.select().from(pieceTypes).orderBy(asc(pieceTypes.sort), asc(pieceTypes.code));

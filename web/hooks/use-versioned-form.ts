@@ -6,7 +6,7 @@ import type { FormState } from "@/lib/form-state";
 
 import { useFormAction } from "./use-form-action";
 
-type FormAction = (prev: FormState, formData: FormData) => Promise<FormState>;
+type FormAction<S extends FormState> = (prev: S, formData: FormData) => Promise<S>;
 
 /**
  * `useFormAction` for edit forms with optimistic locking. `version` is the
@@ -16,8 +16,8 @@ type FormAction = (prev: FormState, formData: FormData) => Promise<FormState>;
  * that same version, i.e. until the user reloads. The form keeps its input
  * meanwhile; key the fields by `version` so a reload refills them.
  */
-export function useVersionedForm(
-  action: FormAction,
+export function useVersionedForm<S extends FormState = FormState>(
+  action: FormAction<S>,
   version: number | string,
   onSuccess?: () => void,
 ) {

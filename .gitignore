@@ -42,3 +42,10 @@ coverage/
 *.tsbuildinfo
 
 docs/samples/
+
+# Tests (Playwright e2e build, reports, uploads)
+web/.next-e2e/
+web/.e2e-uploads/
+web/test-results/
+web/playwright-report/
+web/e2e/.auth/

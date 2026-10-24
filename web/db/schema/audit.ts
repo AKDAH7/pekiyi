@@ -11,6 +11,8 @@ export const AUDIT_ACTIONS = [
   "reactivate",
   "password_reset",
   "password_change",
+  "status_change",
+  "issue",
 ] as const;
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];
 

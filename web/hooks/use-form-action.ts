@@ -4,15 +4,16 @@ import { startTransition, useActionState, useEffect, useRef, type FormEvent } fr
 
 import { initialFormState, type FormState } from "@/lib/form-state";
 
-type FormAction = (prev: FormState, formData: FormData) => Promise<FormState>;
+type FormAction<S extends FormState> = (prev: S, formData: FormData) => Promise<S>;
 
 /**
  * `useActionState` for our form server actions, submitted via onSubmit so
  * React doesn't reset the inputs when the server returns validation errors.
- * `onSuccess` runs once per successful submit (e.g. to close a dialog).
+ * `onSuccess` runs once per successful submit (e.g. to close a dialog). The
+ * clicked submit button's name/value is sent along, like a native submit.
  */
-export function useFormAction(action: FormAction, onSuccess?: () => void) {
-  const [state, dispatch, pending] = useActionState(action, initialFormState);
+export function useFormAction<S extends FormState = FormState>(action: FormAction<S>, onSuccess?: () => void) {
+  const [state, dispatch, pending] = useActionState<S, FormData>(action, initialFormState as Awaited<S>);
 
   const onSuccessRef = useRef(onSuccess);
   useEffect(() => {
@@ -24,7 +25,8 @@ export function useFormAction(action: FormAction, onSuccess?: () => void) {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const submitter = (event.nativeEvent as SubmitEvent).submitter;
+    const formData = new FormData(event.currentTarget, submitter);
     startTransition(() => dispatch(formData));
   }
 

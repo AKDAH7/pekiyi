@@ -98,6 +98,36 @@ at `http://localhost:3000/tr/login` with the admin account you just seeded.
 | `pnpm db:migrate`   | Apply committed migrations to the running database                     |
 | `pnpm db:studio`    | Open Drizzle Studio against the running database                      |
 | `pnpm db:seed`      | Create the first admin user from `SEED_ADMIN_*` env vars (idempotent)  |
+| `pnpm files:cleanup` | List uploaded files nothing uses any more (dry run); `--apply` deletes them |
+| `pnpm test`         | Unit tests (vitest)                                                    |
+| `pnpm test:e2e`     | Browser tests (Playwright, installed Chrome) against the test database |
+| `pnpm check`        | Lint + typecheck + unit + browser tests — must pass before committing  |
+
+## Tests
+
+Tests never touch the development database. Set `DATABASE_URL_TEST` in `.env` (see
+`.env.example`; same Postgres container, database `pekiyi_test`). `pnpm test:e2e` creates and
+wipes that database, migrates and seeds it, builds the app into `web/.next-e2e`, serves it on
+port 3100 (so it runs fine next to `pnpm dev`), and stops the server when done. It uses your
+installed Google Chrome; no browser download is needed. Reports land in
+`web/playwright-report/` (`pnpm --filter web exec playwright show-report`).
+
+## Cleaning up unused uploads
+
+Uploads (model photos, logos, order line photos) live under `UPLOAD_DIR`. A file can end up
+unused — e.g. a photo uploaded in the order grid whose order was never saved. To find them:
+
+```bash
+pnpm files:cleanup           # dry run: lists what would be deleted
+pnpm files:cleanup --apply   # deletes them
+```
+
+A file counts as unused when it is **older than 24 hours** (younger ones may belong to a form
+that is still open), **no table references it** (models, customers, company settings, order
+lines, reference notes) and **no issued document mentions it** (issued proformas are frozen
+snapshots and keep their photos and logos). Thumbnails go with their image. Files whose names
+the app didn't generate are never touched. It uses `DATABASE_URL` and `UPLOAD_DIR` from `.env`,
+like the app; run it on the server from time to time (e.g. a weekly cron with `--apply`).
 
 ## Schema workflow
 

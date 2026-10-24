@@ -6,6 +6,7 @@
 import { eq } from "drizzle-orm";
 
 import { stripRevision } from "../../lib/domain/order-number";
+import { normalizePhone } from "../../lib/domain/phone";
 import * as schema from "../schema";
 
 import { resolveFabric, type SampleOrder, type SeedData } from "./data";
@@ -165,7 +166,8 @@ export async function seedFixtures(db: SeedDb, data: SeedData): Promise<SeedRepo
         country: customer.country,
         city: customer.city ?? null,
         address: customer.address ?? null,
-        phone: customer.phone,
+        // Stored in E.164 like the app does; the source keeps whatever was typed.
+        phone: normalizePhone(customer.phone, customer.country) ?? customer.phone,
         email: customer.email ?? null,
         taxIds: customer.taxIds ?? null,
         docLanguage: customer.docLanguage,

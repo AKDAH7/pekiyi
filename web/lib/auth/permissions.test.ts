@@ -13,11 +13,11 @@ const APP_RESOURCES = [
   "loading",
   "labels",
   "prices",
+  "orderPrices",
   "settings",
 ] as const satisfies readonly Resource[];
 
 const BUSINESS_RESOURCES = [
-  "customers",
   "orders",
   "proformas",
   "production",
@@ -71,6 +71,14 @@ describe("permission map", () => {
       }
     });
 
+    it("maintains customers but only admins delete them", () => {
+      expect(can("export", "customers", "read")).toBe(true);
+      expect(can("export", "customers", "create")).toBe(true);
+      expect(can("export", "customers", "update")).toBe(true);
+      expect(can("export", "customers", "delete")).toBe(false);
+      expect(can("admin", "customers", "delete")).toBe(true);
+    });
+
     it("reads, creates and updates the catalog but never deletes from it", () => {
       expect(can("export", "catalog", "read")).toBe(true);
       expect(can("export", "catalog", "create")).toBe(true);
@@ -78,9 +86,19 @@ describe("permission map", () => {
       expect(can("export", "catalog", "delete")).toBe(false);
     });
 
-    it("sees prices but cannot change them", () => {
+    it("sees catalog prices and rates but cannot change them", () => {
       expect(can("export", "prices", "read")).toBe(true);
       expect(can("export", "prices", "update")).toBe(false);
+    });
+
+    it("sets sale prices on orders (line/piece price, discount, advance)", () => {
+      expect(can("export", "orderPrices", "update")).toBe(true);
+      expect(can("admin", "orderPrices", "update")).toBe(true);
+    });
+
+    it("moves order statuses forward only; stepping back is admin-only", () => {
+      expect(can("export", "orders", "revertStatus")).toBe(false);
+      expect(can("admin", "orders", "revertStatus")).toBe(true);
     });
 
     it("has no access to company settings, bank accounts or rate entry", () => {
@@ -114,6 +132,8 @@ describe("permission map", () => {
         expect(can("production", "prices", action)).toBe(false);
       }
       expect(granted("production", "prices")).toEqual([]);
+      expect(can("production", "orderPrices", "update")).toBe(false);
+      expect(granted("production", "orderPrices")).toEqual([]);
     });
 
     it("has no access to customers, catalog, orders, settings, proformas, users or the audit log", () => {

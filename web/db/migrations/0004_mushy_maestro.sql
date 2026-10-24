@@ -1,0 +1,1 @@
+ALTER TABLE "customer_product_codes" ADD CONSTRAINT "customer_product_codes_customer_product_unique" UNIQUE NULLS NOT DISTINCT("customer_id","model_id","piece_type_id","fabric_id");

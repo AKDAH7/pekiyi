@@ -11,6 +11,7 @@ import {
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 
@@ -58,6 +59,8 @@ export type DocumentOptions = {
   showSecondaryCurrency?: boolean;
   showCbm?: boolean;
   showPhotos?: boolean;
+  /** Bank block: only the order currency's account; off (default) = every active account. */
+  bankOrderCurrencyOnly?: boolean;
 };
 
 /** A user-defined extra column on the order grid / documents. */
@@ -286,7 +289,10 @@ export type DocType = (typeof DOC_TYPES)[number];
  * An issued document. `snapshot` is a frozen copy of every value the document
  * was built from, so it can be re-rendered identically later; editing the
  * order afterwards leads to a new revision, never to a changed issue. Issues
- * are immutable, hence no updated_at/version.
+ * are immutable, hence no updated_at/version; a trigger (migrations 0006,
+ * 0007) rejects every update and delete. The rendered files are stored by
+ * the storage helper under a key derived from the issue, language and
+ * format (lib/documents/proforma/service.ts), not in the row.
  */
 export const documentIssues = pgTable(
   "document_issues",
@@ -300,8 +306,9 @@ export const documentIssues = pgTable(
     revision: integer("revision").notNull().default(0),
     language: text("language").$type<DocLanguage>().notNull(),
     snapshot: jsonb("snapshot").$type<Record<string, unknown>>().notNull(),
-    pdfPath: text("pdf_path"),
-    xlsxPath: text("xlsx_path"),
+    // Fingerprint of the order content the document was built from
+    // (lib/orders/issue.ts): issuing again without changes is refused.
+    contentHash: text("content_hash"),
     issuedBy: text("issued_by").references(() => user.id),
     issuedAt: timestamp("issued_at", { withTimezone: true }).notNull().defaultNow(),
   },
@@ -310,5 +317,31 @@ export const documentIssues = pgTable(
     index("document_issues_issued_by_idx").on(table.issuedBy),
     check("document_issues_doc_type_check", inList(table.docType, DOC_TYPES)),
     check("document_issues_language_check", inList(table.language, DOC_LANGUAGES)),
+  ],
+);
+
+/**
+ * A named set of custom columns, applied to orders from the "Columns" menu.
+ * customer_id null = offered for every customer. A customer's default
+ * template is applied to its new orders automatically.
+ */
+export const columnTemplates = pgTable(
+  "column_templates",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    customerId: uuid("customer_id").references(() => customers.id, { onDelete: "cascade" }),
+    isDefault: boolean("is_default").notNull().default(false),
+    columns: jsonb("columns").$type<CustomColumn[]>().notNull().default([]),
+    ...businessColumns(),
+  },
+  (table) => [
+    index("column_templates_customer_idx").on(table.customerId),
+    // One name per scope (global, or per customer); nulls compared as equal.
+    unique("column_templates_scope_name_unique").on(table.customerId, table.name).nullsNotDistinct(),
+    uniqueIndex("column_templates_default_unique")
+      .on(table.customerId)
+      .where(sql`${table.isDefault}`),
+    check("column_templates_default_check", sql`not ${table.isDefault} or ${table.customerId} is not null`),
   ],
 );

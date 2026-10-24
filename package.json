@@ -11,6 +11,12 @@
     "db:studio": "pnpm --filter web db:studio",
     "db:seed": "pnpm --filter web db:seed",
     "db:seed:check": "pnpm --filter web db:seed:check",
-    "dev": "pnpm --filter web dev"
+    "files:cleanup": "pnpm --filter web files:cleanup",
+    "dev": "pnpm --filter web dev",
+    "lint": "pnpm --filter web lint",
+    "typecheck": "pnpm --filter web typecheck",
+    "test": "pnpm --filter web test",
+    "test:e2e": "pnpm --filter web test:e2e",
+    "check": "pnpm --filter web check"
   }
 }

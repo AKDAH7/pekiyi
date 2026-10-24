@@ -22,7 +22,8 @@ export const statements = {
   // Models, piece packing data, presets and fabrics. Price fields inside the
   // catalog are guarded separately by `prices.update`.
   catalog: CRUD,
-  orders: CRUD,
+  // revertStatus: move an order's status back one step (with a reason).
+  orders: [...CRUD, "revertStatus"],
   proformas: CRUD,
   production: CRUD,
   loading: CRUD,
@@ -30,6 +31,10 @@ export const statements = {
   // Separate resource so price fields can be hidden everywhere for roles
   // without `prices.read` (production must never see prices).
   prices: ["read", "update"],
+  // Sale prices on orders (line/piece price, discount, advance). Separate from
+  // `prices.update`, which guards catalog prices, presets and exchange rates.
+  // Seeing them still needs `prices.read`.
+  orderPrices: ["update"],
   // Company settings, bank accounts and exchange rates (admin only). Reading
   // exchange rates needs `prices.read`: rates are price data too.
   settings: ["read", "update"],
@@ -47,16 +52,18 @@ export const roles = {
     auditLog: [...statements.auditLog],
     customers: [...CRUD],
     catalog: [...CRUD],
-    orders: [...CRUD],
+    orders: [...statements.orders],
     proformas: [...CRUD],
     production: [...CRUD],
     loading: [...CRUD],
     labels: [...CRUD],
     prices: [...statements.prices],
+    orderPrices: [...statements.orderPrices],
     settings: [...statements.settings],
   }),
   export: ac.newRole({
-    customers: [...CRUD],
+    // Maintains customers; deleting one (only possible without orders) is admin-only.
+    customers: ["read", "create", "update"],
     // Maintains the catalog but never deletes from it.
     catalog: ["read", "create", "update"],
     orders: [...CRUD],
@@ -66,6 +73,8 @@ export const roles = {
     labels: [...CRUD],
     // Sees catalog prices and exchange rates; only admins change them.
     prices: ["read"],
+    // Prices its orders: line/piece prices, discount, advance.
+    orderPrices: ["update"],
   }),
   production: ac.newRole({
     production: ["read"],

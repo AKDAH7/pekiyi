@@ -54,9 +54,11 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
   `entity`, `entity_id`, `action`, `before` JSONB, `after` JSONB, `created_at`) written from one
   shared helper that every mutating server action calls — not ad hoc inserts scattered across
   actions.
-- **File uploads (Phase 7+):** stored on local disk under a configurable `UPLOAD_DIR`, behind a
-  small storage helper, so the app can switch to S3-compatible storage later without touching
-  callers.
+- **File uploads:** stored on local disk under a configurable `UPLOAD_DIR`, behind the storage
+  helper (`web/lib/storage`, one folder per kind: models, company, customers, orders), so the app
+  can switch to S3-compatible storage later without touching callers. Delete replaced/removed
+  images with `removeImages` / `settleImages` (`web/lib/uploads.ts`), which keep files an issued
+  document still mentions; `pnpm files:cleanup` removes orphans.
 - **No hardcoded UI strings.** Every visible string goes through next-intl, with translations
   added to `web/messages/tr.json`, `ar.json`, and `en.json` at the same time.
 - **RTL-safe styling only, everywhere — including `web/components/ui/`.** Use Tailwind logical
@@ -88,8 +90,42 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
   existing rows — users edit seeded values in the app.
 - **Production never receives price data.** Anything the production role can reach reads
   through `web/lib/orders/production-queries.ts` (explicit column lists, tested SQL).
+- **Order rows keep their identity.** Order lines/pieces/fabrics are saved by diff
+  (`syncOrderLines` in `web/lib/orders/persist.ts`), never delete + re-insert: other tables
+  (loading ticks) will reference them.
+- **Issued documents are immutable.** `document_issues` rows are only ever inserted (a DB trigger
+  refuses updates of the frozen columns and deletes); a change to the order means a new revision.
 - **Money/rate/CBM math uses `web/lib/domain/decimal.ts`** (decimal.js), never JS numbers.
+- **Phones are stored in E.164** (`normalizePhone` in `web/lib/domain/phone.ts`, read in the
+  customer's country) and shown with `formatPhone`. **Search and duplicate checks fold Turkish
+  letters** (`web/lib/domain/text-fold.ts`; the SQL side uses the same `FOLD_FROM`/`FOLD_TO`).
+- **Documents are rendered from one view model.** A document's PDF and Excel both come from the
+  view model built from the frozen snapshot (or, for a draft, the snapshot built the same way from
+  the live order); renderers decide layout, never content. Document labels live in
+  `web/messages/documents/*.json`, not in the UI messages. Fonts are bundled
+  (`web/lib/documents/fonts`) and embedded — rendering never touches the network.
+- **Countries are ISO-2 codes; names come from `Intl.DisplayNames`** in the UI language, flags
+  from `/api/flags/<code>` (SVG — Windows can't render flag emoji). Never store country names.
+- **Every step adds/updates e2e tests in `web/e2e/` and must pass `pnpm check`** (lint + tsc +
+  unit + e2e) before it is done. See "Tests" below.
+- **Never run browser tests (or any test) against the dev database** (`DATABASE_URL`). Tests use
+  `DATABASE_URL_TEST` only, and the e2e run starts its own server — no throwaway Playwright
+  scripts in temp folders against `pnpm dev`.
 - Each step of work ends with a git commit.
+
+## Tests
+
+- `pnpm test` — vitest unit tests (`*.test.ts` next to the code). DB-backed ones use
+  `DATABASE_URL_TEST` (created + migrated by `web/test/vitest-global-setup.ts`) and roll back.
+- `pnpm test:e2e` — Playwright (`web/e2e/*.spec.ts`), installed Chrome (`channel: "chrome"`, no
+  browser downloads). `web/e2e/global-setup.ts` creates/wipes `pekiyi_test`, migrates, seeds it
+  with `SEED_FIXTURES=true SEED_TEST_USERS=true` and the fixed accounts in
+  `web/e2e/support/accounts.ts`, builds the app into `web/.next-e2e` (so it never clashes with
+  `pnpm dev`), starts it on **port 3100** and stops it afterwards. If 3100 is taken the run fails
+  instead of killing anything. `E2E_SKIP_BUILD=1` reuses the last build when only tests changed.
+- Specs share one seeded DB and run serially; give created records unique names
+  (`uniqueSuffix()`). Every spec fails on React hydration errors (auto fixture).
+- `pnpm check` — lint + `tsc --noEmit` + unit + e2e. Must be green at the end of every step.
 
 ## Safety
 
@@ -121,11 +157,23 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
 │   ├── i18n/                 next-intl routing/navigation/request config
 │   ├── lib/auth/             Better Auth config, session/role helpers (requireUser, requireRole)
 │   ├── lib/domain/           pure business functions (totals, pricing, numbering…), no DB
-│   ├── lib/orders/           order data access; production-queries.ts is the price-free path
+│   ├── lib/orders/           order data access: persist.ts (numbering + one-unit save by diff),
+│   │                         queries, editor.ts (grid state ↔ payload/domain), audit-diff,
+│   │                         price-guard, custom-columns, issue.ts (proforma snapshot/fingerprint),
+│   │                         history.ts; production-queries.ts is the price-free path
+│   ├── lib/customers/        customer queries, form options, client-safe constants
+│   ├── lib/documents/        generated documents: languages/file names, formatting + labels
+│   │                         (messages/documents/*.json), Chromium PDF service (pdf.ts), bundled
+│   │                         fonts; proforma/: snapshot parser, view-model.ts (the one function both
+│   │                         outputs use), html.ts (PDF template), excel.ts, service.ts (cached
+│   │                         issued files, draft preview)
 │   ├── actions/              server actions (login/logout, future mutations)
 │   ├── components/           shared UI; components/ui/ is shadcn-generated
-│   ├── messages/             tr.json, ar.json, en.json
-│   ├── scripts/              check-logical-classes.mjs (RTL class lint, run by `pnpm lint`)
+│   ├── messages/             tr.json, ar.json, en.json (UI); documents/{tr,en,ar}.json (document labels)
+│   ├── scripts/              check-logical-classes.mjs (RTL class lint, run by `pnpm lint`),
+│   │                         files-cleanup.ts (`pnpm files:cleanup`)
+│   ├── e2e/                  Playwright specs, global setup (test DB + server on :3100), support/
+│   ├── test/                 test-DB helpers shared by vitest and Playwright
 │   └── proxy.ts              locale negotiation + fast session-cookie presence check
 ├── docs/ROADMAP.md, docs/DOMAIN.md
 └── README.md
@@ -140,5 +188,8 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for the phased build plan.
 - `pnpm db:seed` — create the first admin user from `SEED_ADMIN_*` env vars and insert missing
   reference data; `SEED_FIXTURES=true` adds the sample customers/orders. Insert-only, never
   overwrites
-- `pnpm db:seed:check` — re-seeds over edited values and asserts nothing was overwritten
+- `pnpm db:seed:check` — re-seeds over edited values and asserts nothing was overwritten (runs
+  against `DATABASE_URL_TEST`, never the dev database)
+- `pnpm files:cleanup` — list uploads nothing references (older than 24 h); `--apply` deletes them
 - `pnpm dev` — run the Next.js dev server (`web/`)
+- `pnpm test` / `pnpm test:e2e` / `pnpm check` — unit / browser / everything (see "Tests")

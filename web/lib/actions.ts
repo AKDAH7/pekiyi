@@ -28,6 +28,11 @@ type MutationOptions = {
   unique?: Record<string, Failure>;
   /** Error shown when a delete is blocked by rows still referencing the record. */
   inUse?: Failure;
+  /**
+   * Re-render the page after success (default). Off for editors that keep
+   * their own state and only need the action's result.
+   */
+  refresh?: boolean;
 };
 
 async function toFormState(failure: Failure): Promise<FormState> {
@@ -62,6 +67,6 @@ export async function runMutation(
     if (options.inUse && isForeignKeyViolation(error)) return toFormState(options.inUse);
     throw error;
   }
-  refresh();
+  if (options.refresh !== false) refresh();
   return success();
 }

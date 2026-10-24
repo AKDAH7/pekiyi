@@ -7,6 +7,8 @@ export default defineConfig({
   },
   test: {
     include: ["**/*.test.ts"],
-    exclude: ["**/node_modules/**", "**/.next/**"],
+    // Browser tests live in e2e/ (*.spec.ts) and run with Playwright.
+    exclude: ["**/node_modules/**", "**/.next/**", "**/.next-e2e/**", "e2e/**"],
+    globalSetup: ["./test/vitest-global-setup.ts"],
   },
 });

@@ -1,7 +1,8 @@
 /**
- * Runs against the development database (DATABASE_URL from the repo-root
- * .env). Everything happens inside transactions that are rolled back, so no
- * data is left behind. Skipped when no database is configured.
+ * Runs against the test database (DATABASE_URL_TEST from the repo-root .env,
+ * migrated by test/vitest-global-setup.ts) — never the development one.
+ * Everything happens inside transactions that are rolled back, so no data is
+ * left behind. Skipped when no test database is configured.
  */
 import path from "node:path";
 
@@ -17,7 +18,7 @@ import * as schema from "@/db/schema";
 import { loadVersioned, updateVersioned, VersionConflictError } from "./versioned";
 
 config({ path: path.resolve(import.meta.dirname, "../../../.env"), quiet: true });
-const url = process.env.DATABASE_URL;
+const url = process.env.DATABASE_URL_TEST;
 
 const client = url ? postgres(url, { max: 2, onnotice: () => {} }) : null;
 const db = client ? drizzle(client, { schema }) : null;

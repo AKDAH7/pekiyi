@@ -26,6 +26,9 @@ const SCAN_GLOBS = ["**/*.ts", "**/*.tsx"];
 const IGNORE = [
   "**/node_modules/**",
   "**/.next/**",
+  "**/.next-e2e/**",
+  "**/test-results/**",
+  "**/playwright-report/**",
   "**/dist/**",
   "scripts/check-logical-classes.mjs",
 ];

@@ -32,14 +32,28 @@ from the real Excel/PDF files in `docs/samples/` (git-ignored). Schema:
 `customers`: company, contact, country (ISO-2), address, phones, tax ids (BTW/KVK…), the
 **language their documents are printed in** (tr/en/ar), default and secondary currency, default
 incoterm (EXW, sometimes FOB), and **label branding**: `pekiyi`, `none`, or `customer_logo`.
-Some customers forbid the PEKİYİ name on labels. `customer_product_codes` keeps a customer's own
-EAN-13 barcodes, stock codes and brand names for our products (private-label stickers).
+Some customers forbid the PEKİYİ name on labels; `customer_logo` requires an uploaded logo.
+`customer_product_codes` keeps a customer's own EAN-13 barcodes, stock codes and brand names for
+our products (private-label stickers). A code targets a model, optionally narrowed to one piece
+type and/or one fabric (empty = all). Per customer, a barcode is used once and each
+model/piece-type/fabric combination has at most one code.
+
+Phones and WhatsApp numbers are stored in E.164 (`+31633999931`); a number typed without a
+country code is read in the customer's country. Before a new customer is created we look for
+an existing one with the same email, a shared phone/WhatsApp number, or a very similar company
+name (Turkish letters, case, spaces, punctuation and words like "Furniture"/"Mobilya"/"Ltd"
+ignored; one-letter typos tolerated) and ask the user to confirm. Customers are deactivated
+rather than deleted; an admin can delete one only while it has no orders.
 
 ## Orders
 
 An **order** (`orders`) belongs to one customer and moves through
 `offer → proforma → confirmed → in_production → ready → loading → shipped → closed`
-(or `cancelled`).
+(or `cancelled`). The status is changed on its own (not with the order save), one step forward
+at a time; an order can be cancelled from any status before `shipped`; only an admin can move it
+back one step (a cancelled order back to the status it was cancelled from), and must give a
+reason. Every change is in the audit log with its optional note / reason
+([web/lib/domain/order-status.ts](../web/lib/domain/order-status.ts)).
 
 **Order numbers** look like `261012-1ZOC`: date (YYMMDD), a running number for that day, and an
 internal company code. The pattern (`{YY}{MM}{DD}-{SEQ}{CODE}`), the revision suffix (`-REV{N}`)
@@ -47,11 +61,27 @@ and the code (`ZOC`) are company settings. The code changes from time to time, s
 stores the code it was created with** (`orders.order_code`) and changing the setting never
 renumbers existing orders. SEQ counts all orders of the day whatever their code. Revisions add
 `-REV1`, `-REV2`, … (we have reached REV11) and keep the original code.
+A new order gets its number on its **first save**, inside the saving transaction and under a
+per-day Postgres advisory lock, so two people saving at the same second get consecutive numbers.
+
+An order is **saved as one unit** — header, lines, pieces and fabrics — guarded by the single
+`orders.version` (optimistic locking) and recorded as one audit entry listing what changed. Lines,
+pieces and fabrics are written **by diff**: unchanged rows are not touched and keep their id, so
+rows that point at them (loading ticks on pieces, Phase 7) survive every save.
+**Order prices** (line and piece prices, discount, advance) are set by admin and export users
+(`orderPrices.update`). Catalog prices, presets, exchange rates, bank and company settings stay
+admin-only (`prices.update`, `settings`).
 
 An order holds: currency, optional **secondary currency + rate** (e.g. EUR at 1.12 USD per EUR,
 stored as "order currency per 1 secondary unit"), incoterm, delivery time and payment terms (in
 three languages), the **advance** (a fixed amount *or* a percentage; balance = total − advance),
 notes, document options and custom columns.
+
+**Custom columns** (`orders.custom_columns`, values in `order_items.custom_values`) are extra
+per-line columns: a TR/EN/AR label, text or number, and the documents they are printed on
+(proforma / production / loading). The key is generated once from the Turkish label and never
+changes. A **column template** (`column_templates`) is a named column set, for all customers or
+for one; a customer's default template is applied to its new orders.
 
 ### Order lines
 
@@ -87,7 +117,31 @@ A **line** (`order_items`) = model + composition + fabric(s) + quantity + unit (
 Proforma options seen in our files: per-piece price columns, a secondary-currency column, unit and
 total CBM, a photo per line (`orders.document_options`). Issuing a document
 (`document_issues`) freezes a **snapshot** of every value it was built from; editing the order
-afterwards leads to a new revision, never to a changed document.
+afterwards leads to a new revision, never to a changed document (a database trigger refuses any
+update or delete of an issued row).
+
+**Issuing a proforma** ([web/lib/orders/issue.ts](../web/lib/orders/issue.ts)) snapshots the
+company, every active bank account (one for the order currency is required), the customer, the
+header, lines with pieces and fabrics, customer notes, the custom columns and reference notes
+marked for the proforma, totals, document options, and the names of the models, piece types and
+fabric colours the order uses — every translatable value in all three languages. The first issue
+keeps the order's number (revision 0, or an imported order's existing REV); each later issue is the
+next revision and the order's number becomes base + `-REV{N}`. Issuing again when nothing the
+proforma shows has changed (same content fingerprint) is refused; status, production notes, label
+settings and **the language** don't count as changes — a revision is about content, and every
+issued revision can be downloaded in any language (tr, en, ar, or en + ar). The language picked
+when issuing is only the default for downloads. Issuing an offer makes it a proforma. Files an
+issued document mentions (line photos, logos) are kept even after the order or the settings stop
+using them.
+
+**Proforma documents** ([web/lib/documents/](../web/lib/documents/)): one view model per
+(snapshot, language) feeds both the PDF (HTML printed by headless Chromium) and the Excel workbook
+(real formulas). The "Preview" on the order page renders the saved order the same way with a DRAFT
+watermark and stores nothing; an issued revision's PDF/Excel is rendered on its first download per
+language and format, stored, and served unchanged afterwards. Production notes and everything
+marked production-only never reach a proforma; the production role gets 403 on every document URL.
+Dates print with month names ("22 Oct 2026", "22 Eki 2026", "22 أكتوبر 2026"), money with the
+currency symbol and the language's separators ("$51,100.00", "$51.100,00").
 
 ### Production never sees prices
 

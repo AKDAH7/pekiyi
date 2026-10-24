@@ -9,6 +9,10 @@ const FOLDER_ACCESS: Record<StorageFolder, (role: string | null | undefined) => 
   models: (role) => can(role, "catalog", "read"),
   // The company logo appears on every document, so every signed-in user may load it.
   company: () => true,
+  // Customer logos (labels with the customer's branding).
+  customers: (role) => can(role, "customers", "read"),
+  // Per-line photos of an order; the production sheet will show them too.
+  orders: (role) => can(role, "orders", "read") || can(role, "production", "read"),
 };
 
 /**

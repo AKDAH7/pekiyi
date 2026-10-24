@@ -6,8 +6,11 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import {
   createStorage,
+  documentKey,
   IMAGE_MAX_BYTES,
   isValidKey,
+  MEDIUM_WIDTH,
+  mediumKey,
   StorageError,
   thumbnailKey,
   type Storage,
@@ -114,10 +117,53 @@ describe("storage keys", () => {
     expect(await storage.read("models/0b5e3c1a-1111-4222-8333-944455556666.png")).toBeNull();
   });
 
-  it("removes an image together with its thumbnail", async () => {
+  it("removes an image together with its thumbnail and medium variant", async () => {
     const key = await storage.saveImage(file(await image("png"), "a.png", "image/png"), "company");
+    await storage.readMedium(key);
     await storage.remove(key);
     expect(await storage.read(key)).toBeNull();
     expect(await storage.read(thumbnailKey(key))).toBeNull();
+    expect(await storage.read(mediumKey(key))).toBeNull();
+  });
+});
+
+describe("storage.readMedium", () => {
+  it("generates a JPEG at most 600 px wide on first use, keeps the aspect ratio, and reuses it", async () => {
+    const key = await storage.saveImage(file(await image("png", 1800, 1200), "a.png", "image/png"), "models");
+    // Images uploaded before the variant existed have none yet.
+    expect(await storage.read(mediumKey(key))).toBeNull();
+
+    const medium = await storage.readMedium(key);
+    expect(medium).toMatchObject({ width: MEDIUM_WIDTH, height: 400 });
+    expect((await sharp(medium!.body).metadata()).format).toBe("jpeg");
+    expect((await storage.read(mediumKey(key)))?.body.equals(medium!.body)).toBe(true);
+    expect((await storage.readMedium(key))?.body.equals(medium!.body)).toBe(true);
+  });
+
+  it("never enlarges small images and returns null for missing ones", async () => {
+    const key = await storage.saveImage(file(await image("jpeg", 300, 500), "a.jpg", "image/jpeg"), "orders");
+    expect(await storage.readMedium(key)).toMatchObject({ width: 300, height: 500 });
+    expect(await storage.readMedium("orders/0b5e3c1a-1111-4222-8333-944455556666.png")).toBeNull();
+    expect(await storage.readMedium(thumbnailKey(key))).toBeNull();
+  });
+});
+
+describe("rendered documents", () => {
+  const issue = "0b5e3c1a-1111-4222-8333-944455556666";
+
+  it("stores one file per issue, language and format; the first write wins", async () => {
+    const key = documentKey(issue, "en-ar", "pdf");
+    expect(await storage.readDocument(key)).toBeNull();
+    await storage.saveDocument(key, Buffer.from("first"));
+    await storage.saveDocument(key, Buffer.from("second"));
+    expect((await storage.readDocument(key))?.toString()).toBe("first");
+    // Not an image: the files route never serves it, and the orphan cleanup never lists it.
+    expect(isValidKey(key)).toBe(false);
+    expect((await storage.list()).some((entry) => entry.key.startsWith("documents/"))).toBe(false);
+  });
+
+  it("refuses keys it didn't derive", async () => {
+    await expect(storage.saveDocument("documents/../../.env", Buffer.from("x"))).rejects.toThrow();
+    expect(await storage.readDocument(`documents/${issue}.de.pdf`)).toBeNull();
   });
 });

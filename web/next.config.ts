@@ -11,6 +11,12 @@ config({ path: path.resolve(__dirname, "../.env") });
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // The e2e run builds into its own directory (e2e/server.ts), so it never
+  // clashes with a running `pnpm dev` (Next locks its output directory).
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+  // Document rendering (lib/documents): headless Chromium and the Excel
+  // writer run as plain Node modules, not bundled.
+  serverExternalPackages: ["playwright-core", "exceljs"],
   experimental: {
     // Enables `forbidden()` + forbidden.tsx, used by requirePermission() to
     // render the "No permission" page instead of redirecting.

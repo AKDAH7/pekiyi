@@ -29,6 +29,8 @@ type Props = {
   maxLength?: number;
   multiline?: boolean;
   className?: string;
+  /** Called with all three languages on every change (for editors that keep their own state). */
+  onValueChange?: (value: LocalizedText) => void;
 };
 
 function TranslatedField({
@@ -43,6 +45,7 @@ function TranslatedField({
   maxLength,
   multiline,
   className,
+  onValueChange,
 }: Props) {
   const t = useTranslations("translated");
   const languages = useTranslations("languages");
@@ -59,6 +62,11 @@ function TranslatedField({
   const errorId = `${id}-error`;
 
   const Control = multiline ? Textarea : Input;
+
+  function update(next: Record<Language, string>) {
+    setValues(next);
+    onValueChange?.(next);
+  }
 
   return (
     <div className={cn("flex min-w-0 flex-col gap-2", className)}>
@@ -108,7 +116,7 @@ function TranslatedField({
           dir={lang === "ar" ? "rtl" : "ltr"}
           value={values[lang]}
           onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setValues((current) => ({ ...current, [lang]: event.target.value }))
+            update({ ...values, [lang]: event.target.value })
           }
           disabled={disabled}
           maxLength={maxLength}
@@ -126,7 +134,7 @@ function TranslatedField({
             variant="ghost"
             size="xs"
             disabled={values.tr.trim() === ""}
-            onClick={() => setValues((current) => ({ ...current, [active]: current.tr }))}
+            onClick={() => update({ ...values, [active]: values.tr })}
           >
             <Copy />
             {t("copyFromTr")}
